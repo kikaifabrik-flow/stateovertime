@@ -342,19 +342,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-6 mt-12">
-        <div className="max-w-4xl mx-auto px-4 text-center text-sm">
-          <p>
-            &copy; {new Date().getFullYear()} StateOvertime.com — Free
-            overtime calculator for US workers.
-          </p>
-          <p className="mt-2 text-xs">
-            This tool provides estimates only. Consult your HR department or
-            state labor board for official calculations.
-          </p>
-        </div>
-      </footer>
+ <footer className="bg-slate-900 text-slate-400 py-8 mt-12">
+  <div className="max-w-4xl mx-auto px-4">
+    <div className="flex flex-wrap justify-center gap-6 mb-4 text-sm">
+      <a href="/about" className="text-slate-300 hover:text-white transition-colors">About</a>
+      <a href="/privacy" className="text-slate-300 hover:text-white transition-colors">Privacy Policy</a>
+      <a href="/disclaimer" className="text-slate-300 hover:text-white transition-colors">Disclaimer</a>
+      <a href="/contact" className="text-slate-300 hover:text-white transition-colors">Contact</a>
+    </div>
+    <p className="text-center text-sm">&copy; {new Date().getFullYear()} StateOvertime.com — Free overtime calculator for US workers.</p>
+    <p className="text-center mt-2 text-xs">This tool provides estimates only. Consult your HR department or state labor board for official calculations.</p>
+  </div>
+</footer>
     </main>
   );
 }
