@@ -1,7 +1,7 @@
-import { STATES_DATA } from "@/data/states";
+import { STATES_DATA } from "../../../data/states";
 import Link from "next/link";
-import Calculator from "@/components/Calculator";
-import StateFAQ from "@/components/StateFAQ";
+import Calculator from "../../../components/Calculator";
+import StateFAQ from "../../../components/StateFAQ";
 
 export function generateStaticParams() {
   return STATES_DATA.map((state) => ({
@@ -43,12 +43,10 @@ export default function StatePage({ params }: { params: { state: string } }) {
       </header>
 
       <section className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-        {/* Calculator */}
         <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
           <Calculator defaultState={state.code} />
         </div>
 
-        {/* State Info */}
         <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">
             {state.name} Overtime Laws
@@ -61,7 +59,6 @@ export default function StatePage({ params }: { params: { state: string } }) {
           </div>
         </div>
 
-        {/* OT Rules Summary */}
         <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">
             {state.name} Overtime Rules Summary
@@ -96,10 +93,8 @@ export default function StatePage({ params }: { params: { state: string } }) {
           </div>
         </div>
 
-        {/* FAQ */}
         <StateFAQ faqs={state.faqs} stateName={state.name} />
 
-        {/* Related States */}
         <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">
             Other State Overtime Calculators
