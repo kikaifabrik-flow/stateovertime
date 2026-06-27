@@ -174,8 +174,9 @@ export default function Home() {
             State Overtime Calculator
           </h1>
           <p className="text-slate-300 mt-2 text-sm md:text-base">
-            Free overtime calculator with state-specific rules. Calculate your
-            OT pay for California, Alaska, Nevada, and federal FLSA.
+           Free overtime calculator with state-specific rules for all 50 US
+            states plus Washington DC. Calculate your overtime pay based on
+            federal FLSA and state labor laws.
           </p>
         </div>
       </header>
