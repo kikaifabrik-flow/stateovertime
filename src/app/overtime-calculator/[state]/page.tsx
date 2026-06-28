@@ -2,7 +2,7 @@ import { STATES_DATA } from "../../../data/states";
 import Link from "next/link";
 import Calculator from "../../../components/Calculator";
 import StateFAQ from "../../../components/StateFAQ";
-
+ 
 export function generateStaticParams() {
   return STATES_DATA.map((state) => ({
     state: state.slug,
