@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 interface FAQ {
   question: string;
   answer: string;
@@ -9,11 +10,28 @@ interface FAQ {
 export default function StateFAQ({ faqs, stateName }: { faqs: FAQ[]; stateName: string }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
       <h2 className="text-2xl font-bold text-slate-900 mb-4">
         {stateName} Overtime FAQ
       </h2>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="space-y-3">
         {faqs.map((faq, index) => (
           <div key={index} className="border border-slate-200 rounded-lg overflow-hidden">
