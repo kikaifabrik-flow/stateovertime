@@ -24,7 +24,21 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+  {children}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "State Overtime Calculator",
+        url: "https://stateovertime.com",
+        description: "Free overtime calculator with state-specific rules for all 50 US states plus Washington DC."
+      })
+    }}
+  />
+</body>
     </html>
   );
 }
