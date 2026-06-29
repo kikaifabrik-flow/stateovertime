@@ -1,10 +1,11 @@
 import type { MetadataRoute } from 'next';
+import { STATES_DATA } from '../data/states';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://stateovertime.com';
   const lastModified = new Date();
   
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/`,
       lastModified,
@@ -36,4 +37,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
   ];
+
+  const statePages: MetadataRoute.Sitemap = STATES_DATA.map((state) => ({
+    url: `${baseUrl}/overtime-calculator/${state.slug}`,
+    lastModified,
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...statePages];
 }
