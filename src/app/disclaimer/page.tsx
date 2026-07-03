@@ -1,6 +1,9 @@
 export const metadata = {
   title: "Disclaimer | State Overtime Calculator",
   description: "Legal disclaimer for StateOvertime.com",
+  alternates: {
+    canonical: '/disclaimer',
+  },
 };
 
 export default function DisclaimerPage() {
@@ -46,7 +49,7 @@ export default function DisclaimerPage() {
           </div>
 
           <div className="mt-8 pt-4 border-t border-slate-200">
-            <a href="/" className="text-blue-600 hover:underline font-semibold">&larr; Back to Overtime Calculator</a>
+            <a href="/" className="text-blue-600 hover:underline font-semibold">← Back to Overtime Calculator</a>
           </div>
         </div>
       </section>
