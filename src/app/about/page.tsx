@@ -1,6 +1,9 @@
 export const metadata = {
   title: "About Us | State Overtime Calculator",
   description: "Learn about StateOvertime.com and our mission to help US workers understand their overtime pay.",
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export default function AboutPage() {
@@ -30,7 +33,7 @@ export default function AboutPage() {
               <li><strong className="font-semibold">Free overtime calculator</strong> with state-specific rules</li>
               <li><strong className="font-semibold">Federal FLSA compliance</strong> for all 50 states plus DC</li>
               <li><strong className="font-semibold">California daily overtime</strong> (over 8 hours = 1.5x, over 12 hours = 2x)</li>
-              <li><strong className="font-semibold">Alaska &amp; Nevada daily overtime</strong> rules</li>
+              <li><strong className="font-semibold">Alaska & Nevada daily overtime</strong> rules</li>
               <li><strong className="font-semibold">No signup required</strong> — your data stays in your browser</li>
             </ul>
           </div>
@@ -41,7 +44,7 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-8 pt-4 border-t border-slate-200">
-            <a href="/" className="text-blue-600 hover:underline font-semibold">&larr; Back to Overtime Calculator</a>
+            <a href="/" className="text-blue-600 hover:underline font-semibold">← Back to Overtime Calculator</a>
           </div>
         </div>
       </section>
