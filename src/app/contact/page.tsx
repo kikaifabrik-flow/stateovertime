@@ -1,6 +1,9 @@
 export const metadata = {
   title: "Contact Us | State Overtime Calculator",
   description: "Contact StateOvertime.com with questions, feedback, or partnership inquiries.",
+  alternates: {
+    canonical: '/contact',
+  },
 };
 
 export default function ContactPage() {
@@ -41,7 +44,7 @@ export default function ContactPage() {
           </div>
 
           <div className="mt-8 pt-4 border-t border-slate-200">
-            <a href="/" className="text-blue-600 hover:underline font-semibold">&larr; Back to Overtime Calculator</a>
+            <a href="/" className="text-blue-600 hover:underline font-semibold">← Back to Overtime Calculator</a>
           </div>
         </div>
       </section>
