@@ -15,6 +15,9 @@ export function generateMetadata({ params }: { params: { state: string } }) {
   return {
     title: `${state.name} Overtime Calculator 2026 | Free OT Pay Calc`,
     description: `Free ${state.name} overtime calculator. Calculate your OT pay with ${state.name}-specific rules. ${state.dailyOT ? `Daily overtime at ${state.dailyOTThreshold} hours.` : "Federal FLSA weekly overtime."}`,
+    alternates: {
+      canonical: `/overtime-calculator/${state.slug}`,
+    },
   };
 }
 
