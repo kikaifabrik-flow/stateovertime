@@ -166,7 +166,7 @@ export default function Home() {
     n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
     return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+<main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Header */}
       <header className="bg-slate-900 text-white py-8 shadow-lg">
         <div className="max-w-4xl mx-auto px-4">
