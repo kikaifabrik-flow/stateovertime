@@ -165,9 +165,8 @@ export default function Home() {
   const formatCurrency = (n: number) =>
     n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
-    return (
-<main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Header */}
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       <header className="bg-slate-900 text-white py-8 shadow-lg">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
@@ -181,14 +180,12 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Calculator */}
       <section className="max-w-4xl mx-auto px-4 py-8">
         <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
           <h2 className="text-xl font-semibold text-slate-900 mb-6">
             Enter your work hours
           </h2>
 
-          {/* Hourly Rate */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-slate-700 mb-2">
               Hourly Rate ($)
@@ -204,7 +201,6 @@ export default function Home() {
             />
           </div>
 
-          {/* State Selector */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-slate-700 mb-2">
               State
@@ -222,7 +218,6 @@ export default function Home() {
             </select>
           </div>
 
-          {/* Daily Hours Inputs */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-slate-700 mb-2">
               Hours worked per day
@@ -247,7 +242,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Calculate Button */}
           <button
             onClick={calculate}
             className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
@@ -256,7 +250,6 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Results */}
         {result && (
           <div className="mt-6 bg-white rounded-xl shadow-md p-6 md:p-8">
             <h2 className="text-xl font-semibold text-slate-900 mb-4">
@@ -292,4 +285,32 @@ export default function Home() {
               </div>
               <div className="flex justify-between py-2 border-b border-slate-100">
                 <span className="text-slate-600">Overtime Pay (1.5x):</span>
-                <span className="
+                <span className="font-semibold">
+                  {formatCurrency(result.otPay)}
+                </span>
+              </div>
+              {result.doubleOtPay > 0 && (
+                <div className="flex justify-between py-2 border-b border-slate-100">
+                  <span className="text-slate-600">Double OT Pay (2x):</span>
+                  <span className="font-semibold">
+                    {formatCurrency(result.doubleOtPay)}
+                  </span>
+                </div>
+              )}
+              <div className="flex justify-between py-4 mt-2 bg-blue-50 px-4 rounded-lg">
+                <span className="text-blue-900 font-bold text-lg">
+                  Gross Pay:
+                </span>
+                <span className="text-blue-900 font-bold text-lg">
+                  {formatCurrency(result.grossPay)}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="mt-8 bg-slate-50 rounded-xl p-6 md:p-8">
+          <h3 className="text-lg font-semibold text-slate-900 mb-3">How overtime is calculated</h3>
+          <div className="prose prose-sm text-slate-600 space-y-2">
+            <p><strong>Federal FLSA (all states):</strong> Hours worked over 40 in a workweek must be paid at 1.5x your regular rate.</p>
+            <p><strong>California:</strong> Daily overtime applies — over 8 hours/day = 1.5x, over 12
