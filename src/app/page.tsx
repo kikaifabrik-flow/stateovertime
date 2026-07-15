@@ -165,7 +165,7 @@ export default function Home() {
   const formatCurrency = (n: number) =>
     n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
-  return (
+    return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Header */}
       <header className="bg-slate-900 text-white py-8 shadow-lg">
