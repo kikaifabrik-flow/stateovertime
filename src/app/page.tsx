@@ -313,4 +313,10 @@ export default function Home() {
           <h3 className="text-lg font-semibold text-slate-900 mb-3">How overtime is calculated</h3>
           <div className="prose prose-sm text-slate-600 space-y-2">
             <p><strong>Federal FLSA (all states):</strong> Hours worked over 40 in a workweek must be paid at 1.5x your regular rate.</p>
-            <p><strong>California:</strong> Daily overtime applies — over 8 hours/day = 1.5x, over 12
+            <p><strong>California:</strong> Daily overtime applies — over 8 hours/day = 1.5x, over 12 hours/day = 2x.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
