@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 const STATES: { code: string; name: string }[] = [
@@ -310,13 +311,84 @@ export default function Home() {
         )}
 
         <div className="mt-8 bg-slate-50 rounded-xl p-6 md:p-8">
-          <h3 className="text-lg font-semibold text-slate-900 mb-3">How overtime is calculated</h3>
+          <h3 className="text-lg font-semibold text-slate-900 mb-3">
+            How overtime is calculated
+          </h3>
           <div className="prose prose-sm text-slate-600 space-y-2">
-            <p><strong>Federal FLSA (all states):</strong> Hours worked over 40 in a workweek must be paid at 1.5x your regular rate.</p>
-            <p><strong>California:</strong> Daily overtime applies — over 8 hours/day = 1.5x, over 12 hours/day = 2x.</p>
+            <p>
+              <strong>Federal FLSA (all states):</strong> Hours worked over 40
+              in a workweek must be paid at 1.5x your regular rate.
+            </p>
+            <p>
+              <strong>California:</strong> Daily overtime applies — over 8
+              hours/day = 1.5x, over 12 hours/day = 2x.
+            </p>
+            <p>
+              <strong>Alaska &amp; Nevada:</strong> Daily overtime applies —
+              over 8 hours/day = 1.5x.
+            </p>
+            <p>
+              <strong>All other states:</strong> Follow federal FLSA rules
+              (weekly overtime only).
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 bg-white rounded-xl shadow-md p-6 md:p-8">
+          <h2 className="text-xl font-semibold text-slate-900 mb-5">
+            Browse Overtime Calculator by State
+          </h2>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {STATES.map((stateItem) => {
+              const slug = stateItem.name.toLowerCase().replace(/\s+/g, "-");
+
+              return (
+                <Link
+                  key={stateItem.code}
+                  href={`/overtime-calculator/${slug}`}
+                  className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-900 transition-colors"
+                >
+                  {stateItem.code === "DC" ? "DC" : stateItem.name}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
+
+      <footer className="border-t border-slate-200 bg-white">
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm mb-4">
+            <Link href="/about" className="text-slate-600 hover:text-blue-900">
+              About
+            </Link>
+            <Link
+              href="/privacy-policy"
+              className="text-slate-600 hover:text-blue-900"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/disclaimer"
+              className="text-slate-600 hover:text-blue-900"
+            >
+              Disclaimer
+            </Link>
+            <Link href="/contact" className="text-slate-600 hover:text-blue-900">
+              Contact
+            </Link>
+          </nav>
+
+          <p className="text-sm text-slate-500">
+            © 2026 StateOvertime.com — Free overtime calculator for US workers.
+          </p>
+          <p className="text-xs text-slate-400 mt-2">
+            This tool provides estimates only. Consult your HR department or
+            state labor board for official calculations.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
