@@ -159,6 +159,10 @@ export default function Home() {
           }
         }
       }
+
+      const weeklyOtHours = Math.max(0, regularHours - 40);
+      regularHours -= weeklyOtHours;
+      otHours += weeklyOtHours;
     } else {
       regularHours = Math.min(totalHours, 40);
       otHours = Math.max(0, totalHours - 40);
@@ -391,7 +395,7 @@ export default function Home() {
               About
             </Link>
             <Link
-              href="/privacy-policy"
+              href="/privacy"
               className="text-slate-600 hover:text-blue-900"
             >
               Privacy Policy
