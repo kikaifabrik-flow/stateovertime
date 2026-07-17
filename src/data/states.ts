@@ -1,4 +1,4 @@
-﻿export interface StateInfo {
+export interface StateInfo {
   code: string;
   name: string;
   slug: string;
