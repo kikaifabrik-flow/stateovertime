@@ -1,5 +1,6 @@
 import { STATES_DATA } from "../../../data/states";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import Calculator from "../../../components/Calculator";
 import StateFAQ from "../../../components/StateFAQ";
 
@@ -30,7 +31,7 @@ export function generateMetadata({ params }: { params: { state: string } }) {
 export default function StatePage({ params }: { params: { state: string } }) {
   const state = STATES_DATA.find((s) => s.slug === params.state);
 
-  if (!state) return <div>State not found</div>;
+  if (!state) notFound();
 
   const neighboringStates = STATES_DATA.filter(
     (s) => s.code !== state.code,
@@ -295,7 +296,7 @@ export default function StatePage({ params }: { params: { state: string } }) {
               About
             </Link>
             <Link
-              href="/privacy-policy"
+              href="/privacy"
               className="text-slate-600 hover:text-blue-900"
             >
               Privacy Policy
