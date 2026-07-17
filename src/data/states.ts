@@ -1,4 +1,4 @@
-export interface StateInfo {
+﻿export interface StateInfo {
   code: string;
   name: string;
   slug: string;
@@ -157,7 +157,7 @@ export const STATES_DATA: StateInfo[] = [
     code: "CO",
     name: "Colorado",
     slug: "colorado",
-    intro: "Colorado requires overtime at 1.5 times the regular rate after 40 hours in a workweek, after 12 hours in a workday, or after 12 consecutive hours of work, whichever calculation results in more pay. This calculator handles the daily and weekly thresholds; split shifts that cross calendar days may require a separate consecutive-hours calculation.",
+    intro: "Colorado requires overtime at 1.5 times the regular rate after 40 hours in a workweek, after 12 hours in a workday, or after 12 consecutive hours of work, whichever calculation results in more pay. The calculator includes a separate field for overtime caused by shifts that cross workday boundaries.",
     lawReference: "Colorado COMPS and PAY CALC Orders, Rule 4",
     faqs: [
       {
@@ -526,7 +526,7 @@ export const STATES_DATA: StateInfo[] = [
       },
       {
         question: "How is overtime calculated in Kentucky?",
-        answer: "This calculator applies the standard 40-hour weekly threshold. A seventh consecutive workday may need separate review because eligibility depends on the employee and workweek.",
+        answer: "The calculator applies the standard 40-hour weekly threshold. When hours are entered for all seven days and the week exceeds 40 hours, it also treats Monday through Sunday as one workweek and applies the seventh-day rule. Statutory exemptions may apply.",
       },
     ],
   },
@@ -1106,7 +1106,7 @@ export const STATES_DATA: StateInfo[] = [
       },
       {
         question: "How is overtime calculated in Oregon?",
-        answer: "This general calculator applies overtime after 40 hours in a workweek. Manufacturing and cannery workers should use the applicable industry rule because daily overtime may also apply.",
+        answer: "The calculator applies overtime after 40 hours in a workweek by default. Manufacturing, cannery, drier, and packing-plant workers can select the Oregon industry option to compare that amount with daily overtime after 10 hours and use the greater result.",
       },
     ],
   },
