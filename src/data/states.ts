@@ -2,10 +2,6 @@ export interface StateInfo {
   code: string;
   name: string;
   slug: string;
-  dailyOT: boolean;
-  dailyOTThreshold: number;
-  doubleOT: boolean;
-  doubleOTThreshold: number;
   intro: string;
   lawReference: string;
   faqs: { question: string; answer: string }[];
@@ -16,12 +12,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "AL",
     name: "Alabama",
     slug: "alabama",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Alabama follows federal FLSA overtime rules. Alabama does not have state-specific daily overtime requirements. Employees in Alabama must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. There are no daily overtime triggers in Alabama, meaning an employee can work 10 or 12 hours in a single day without triggering overtime, as long as their weekly total does not exceed 40 hours.",
-    lawReference: "Alabama does not have a state overtime law. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Alabama does not have a state overtime law. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Alabama have daily overtime?",
@@ -49,12 +41,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "AK",
     name: "Alaska",
     slug: "alaska",
-    dailyOT: true,
-    dailyOTThreshold: 8,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Alaska has stronger overtime protections than federal law. In addition to the federal 40-hour weekly overtime rule, Alaska requires daily overtime pay at 1.5 times the regular rate for any hours worked over 8 in a single workday. Alaska labor law also applies overtime to some workers not covered by federal FLSA. Alaska's daily overtime rule means that even if an employee works fewer than 40 hours in a week, they still receive overtime pay for any day where they worked more than 8 hours.",
-    lawReference: "Alaska Stat. § 23.10.060",
+    lawReference: "Alaska Stat. Â§ 23.10.060",
     faqs: [
       {
         question: "Does Alaska have daily overtime?",
@@ -82,12 +70,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "AZ",
     name: "Arizona",
     slug: "arizona",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Arizona follows federal FLSA overtime rules. Arizona does not have state-specific daily overtime requirements. Employees in Arizona must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Arizona's state minimum wage is higher than the federal minimum, but overtime calculations follow federal standards.",
-    lawReference: "Arizona does not have a state overtime law. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Arizona does not have a state overtime law. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Arizona have daily overtime?",
@@ -115,12 +99,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "AR",
     name: "Arkansas",
     slug: "arkansas",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Arkansas follows federal FLSA overtime rules. Arkansas does not have state-specific daily overtime requirements. Employees in Arkansas must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Arkansas state law covers some employers not subject to federal FLSA, but the overtime calculation method is the same.",
-    lawReference: "Arkansas Code § 11-4-217. Federal FLSA also applies (29 U.S.C. § 207).",
+    lawReference: "Arkansas Code Â§ 11-4-217. Federal FLSA also applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Arkansas have daily overtime?",
@@ -148,12 +128,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "CA",
     name: "California",
     slug: "california",
-    dailyOT: true,
-    dailyOTThreshold: 8,
-    doubleOT: true,
-    doubleOTThreshold: 12,
     intro: "California has the strongest overtime protections in the United States. California labor law requires daily overtime pay at 1.5 times the regular rate for hours worked over 8 in a single workday, and double-time pay at 2 times the regular rate for hours worked over 12 in a single workday. California also requires overtime for the first 8 hours on the seventh consecutive day of work in a workweek, and double-time for hours over 8 on the seventh consecutive day. These California-specific overtime rules are in addition to the federal 40-hour weekly overtime requirement.",
-    lawReference: "California Labor Code § 510, California Wage Orders",
+    lawReference: "California Labor Code Â§ 510, California Wage Orders",
     faqs: [
       {
         question: "Does California have daily overtime?",
@@ -181,20 +157,16 @@ export const STATES_DATA: StateInfo[] = [
     code: "CO",
     name: "Colorado",
     slug: "colorado",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: true,
-    doubleOTThreshold: 12,
-    intro: "Colorado has state-specific overtime rules that go beyond federal FLSA. Colorado requires double-time pay at 2 times the regular rate for any hours worked over 12 in a single workday. Colorado also has its own salary threshold for exempt employees, which is updated annually. Colorado follows the federal 40-hour weekly overtime rule for standard overtime calculations.",
-    lawReference: "Colorado Overtime and Minimum Pay Standards Order (COMPS Order) #38",
+    intro: "Colorado requires overtime at 1.5 times the regular rate after 40 hours in a workweek, after 12 hours in a workday, or after 12 consecutive hours of work, whichever calculation results in more pay. This calculator handles the daily and weekly thresholds; split shifts that cross calendar days may require a separate consecutive-hours calculation.",
+    lawReference: "Colorado COMPS and PAY CALC Orders, Rule 4",
     faqs: [
       {
         question: "Does Colorado have daily overtime?",
-        answer: "Colorado does not have a daily overtime trigger at 8 hours, but does require double-time pay at 2x for hours worked over 12 in a single workday.",
+        answer: "Yes. Colorado requires overtime at 1.5x after 12 hours in a workday or 12 consecutive hours of work.",
       },
       {
         question: "What is the overtime rate in Colorado?",
-        answer: "Colorado overtime is 1.5x the regular rate for hours over 40 in a workweek, and 2x for hours over 12 in a single workday.",
+        answer: "Colorado overtime is 1.5x the regular rate after 40 hours in a workweek, after 12 hours in a workday, or after 12 consecutive hours of work.",
       },
       {
         question: "Does Colorado have a higher salary threshold for exemption?",
@@ -206,7 +178,7 @@ export const STATES_DATA: StateInfo[] = [
       },
       {
         question: "How is overtime calculated in Colorado?",
-        answer: "Standard overtime is 1.5x for hours over 40 in a week. Double-time is 2x for hours over 12 in a single day.",
+        answer: "Overtime is 1.5x after 40 weekly hours, 12 daily hours, or 12 consecutive hours, using the calculation that pays the employee the most.",
       },
     ],
   },
@@ -214,12 +186,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "CT",
     name: "Connecticut",
     slug: "connecticut",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Connecticut follows federal FLSA overtime rules for most employees. Connecticut does not have state-specific daily overtime requirements for general employment. Employees in Connecticut must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Some industries in Connecticut have specific overtime rules, but most follow federal standards.",
-    lawReference: "Connecticut General Statutes § 31-76c through 31-76i. Federal FLSA also applies.",
+    lawReference: "Connecticut General Statutes Â§ 31-76c through 31-76i. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Connecticut have daily overtime?",
@@ -247,10 +215,6 @@ export const STATES_DATA: StateInfo[] = [
     code: "DE",
     name: "Delaware",
     slug: "delaware",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Delaware follows federal FLSA overtime rules. Delaware does not have state-specific daily overtime requirements. Employees in Delaware must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Delaware state minimum wage is higher than federal, but overtime calculations follow federal standards.",
     lawReference: "Delaware Code Title 19, Chapter 19. Federal FLSA also applies.",
     faqs: [
@@ -280,12 +244,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "DC",
     name: "District of Columbia",
     slug: "district-of-columbia",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Washington DC follows federal FLSA overtime rules. DC does not have state-specific daily overtime requirements for most employees. Employees in DC must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. DC has one of the highest minimum wages in the country, but overtime calculations follow federal standards.",
-    lawReference: "DC Code § 32-1003. Federal FLSA also applies.",
+    lawReference: "DC Code Â§ 32-1003. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Washington DC have daily overtime?",
@@ -313,12 +273,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "FL",
     name: "Florida",
     slug: "florida",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Florida follows federal FLSA overtime rules. Florida does not have state-specific daily overtime requirements. Employees in Florida must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Florida state minimum wage is higher than federal, but overtime calculations follow federal standards.",
-    lawReference: "Florida does not have a state overtime law. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Florida does not have a state overtime law. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Florida have daily overtime?",
@@ -346,12 +302,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "GA",
     name: "Georgia",
     slug: "georgia",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Georgia follows federal FLSA overtime rules for most employers. Georgia does not have state-specific daily overtime requirements. Employees in Georgia must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Georgia's state minimum wage is lower than federal, meaning most employees are covered by the higher federal minimum wage and FLSA overtime rules.",
-    lawReference: "Georgia Code § 34-4-3. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Georgia Code Â§ 34-4-3. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Georgia have daily overtime?",
@@ -379,10 +331,6 @@ export const STATES_DATA: StateInfo[] = [
     code: "HI",
     name: "Hawaii",
     slug: "hawaii",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Hawaii follows federal FLSA overtime rules. Hawaii does not have state-specific daily overtime requirements for most employees. Employees in Hawaii must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Hawaii state minimum wage is higher than federal, and Hawaii has specific overtime rules for certain industries like sugarcane processing.",
     lawReference: "Hawaii Revised Statutes Chapter 388. Federal FLSA also applies.",
     faqs: [
@@ -412,12 +360,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "ID",
     name: "Idaho",
     slug: "idaho",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Idaho follows federal FLSA overtime rules. Idaho does not have state-specific daily overtime requirements. Employees in Idaho must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Idaho state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Idaho Code § 44-1503. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Idaho Code Â§ 44-1503. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Idaho have daily overtime?",
@@ -445,10 +389,6 @@ export const STATES_DATA: StateInfo[] = [
     code: "IL",
     name: "Illinois",
     slug: "illinois",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Illinois follows federal FLSA overtime rules for most employees. Illinois does not have state-specific daily overtime requirements. Employees in Illinois must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Illinois state minimum wage is higher than federal, and Illinois has specific overtime rules for certain industries.",
     lawReference: "820 ILCS 105/4a. Federal FLSA also applies.",
     faqs: [
@@ -478,12 +418,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "IN",
     name: "Indiana",
     slug: "indiana",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Indiana follows federal FLSA overtime rules. Indiana does not have state-specific daily overtime requirements. Employees in Indiana must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Indiana state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Indiana Code § 22-2-2-4. Federal FLSA applies.",
+    lawReference: "Indiana Code Â§ 22-2-2-4. Federal FLSA applies.",
     faqs: [
       {
         question: "Does Indiana have daily overtime?",
@@ -511,12 +447,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "IA",
     name: "Iowa",
     slug: "iowa",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Iowa follows federal FLSA overtime rules. Iowa does not have state-specific daily overtime requirements. Employees in Iowa must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Iowa state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Iowa Code § 91A.3. Federal FLSA applies.",
+    lawReference: "Iowa Code Â§ 91A.3. Federal FLSA applies.",
     faqs: [
       {
         question: "Does Iowa have daily overtime?",
@@ -544,12 +476,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "KS",
     name: "Kansas",
     slug: "kansas",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Kansas follows federal FLSA overtime rules for most employers. Kansas has a state overtime law that triggers overtime at 46 hours in a workweek, but federal FLSA's 40-hour threshold applies to most employers. Employees in Kansas typically receive overtime pay at 1.5 times their regular rate for hours over 40 in a workweek under federal FLSA.",
-    lawReference: "Kansas Statutes § 44-1204. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Kansas Statutes Â§ 44-1204. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Kansas have daily overtime?",
@@ -577,32 +505,28 @@ export const STATES_DATA: StateInfo[] = [
     code: "KY",
     name: "Kentucky",
     slug: "kentucky",
-    dailyOT: true,
-    dailyOTThreshold: 7,
-    doubleOT: false,
-    doubleOTThreshold: 0,
-    intro: "Kentucky has state-specific overtime rules that differ from federal FLSA. Kentucky requires overtime pay at 1.5 times the regular rate for hours worked over 7 in a single workday for most employees in industries covered by state law. Kentucky also follows the federal 40-hour weekly overtime rule. The 7-hour daily overtime trigger applies to employees covered by Kentucky state labor law.",
-    lawReference: "Kentucky Revised Statutes § 337.028",
+    intro: "Kentucky generally requires overtime at 1.5 times the regular rate after 40 hours in a workweek. Kentucky also has a seventh-day rule for certain employees who work all seven days in the same workweek. It is not a daily overtime rule after seven hours.",
+    lawReference: "Kentucky Revised Statutes Â§ 337.050; federal FLSA (29 U.S.C. Â§ 207)",
     faqs: [
       {
         question: "Does Kentucky have daily overtime?",
-        answer: "Yes. Kentucky requires overtime pay at 1.5x for hours over 7 in a single workday for employees covered by state labor law.",
+        answer: "No. Kentucky does not have a general daily overtime threshold. Its special rule concerns eligible employees who work seven days in one workweek.",
       },
       {
         question: "What is the overtime rate in Kentucky?",
-        answer: "Kentucky overtime is 1.5 times the regular rate for hours over 7 in a workday or over 40 in a workweek.",
+        answer: "Kentucky overtime is generally 1.5 times the regular rate after 40 hours in a workweek. Eligible employees may also receive time-and-a-half for work on the seventh day of that workweek.",
       },
       {
         question: "Does Kentucky have double overtime?",
         answer: "No. Kentucky does not require double-time pay. All overtime is paid at 1.5 times the regular rate.",
       },
       {
-        question: "Which employees are covered by Kentucky's 7-hour daily overtime?",
-        answer: "Kentucky's daily overtime applies to employees in industries covered by Kentucky state labor law. Some industries may be exempt.",
+        question: "Who may qualify for Kentucky's seventh-day overtime?",
+        answer: "The rule generally applies when an employee works all seven days in a workweek, subject to statutory exemptions. It does not create overtime after seven hours in one day.",
       },
       {
         question: "How is overtime calculated in Kentucky?",
-        answer: "Overtime is 1.5 times the regular rate for hours over 7 in a workday or over 40 in a workweek, whichever applies.",
+        answer: "This calculator applies the standard 40-hour weekly threshold. A seventh consecutive workday may need separate review because eligibility depends on the employee and workweek.",
       },
     ],
   },
@@ -610,12 +534,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "LA",
     name: "Louisiana",
     slug: "louisiana",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Louisiana follows federal FLSA overtime rules. Louisiana does not have state-specific daily overtime requirements. Employees in Louisiana must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Louisiana state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Louisiana does not have a state overtime law. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Louisiana does not have a state overtime law. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Louisiana have daily overtime?",
@@ -643,12 +563,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "ME",
     name: "Maine",
     slug: "maine",
-    dailyOT: true,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
-    intro: "Maine has state-specific overtime rules that differ from federal FLSA. Maine's overtime threshold is 40 hours per workweek, but the calculation of the regular rate of pay differs from federal standards for some employees. Maine also has a higher salary threshold for exempt employees than federal standards. Maine follows federal FLSA's basic overtime calculation for most employees.",
-    lawReference: "Maine Revised Statutes Title 26, § 664",
+    intro: "Maine generally requires covered employees to receive overtime at 1.5 times the regular rate after 40 hours in a workweek. Maine does not impose a general daily overtime threshold, although exemptions and industry-specific rules may apply.",
+    lawReference: "Maine Revised Statutes Title 26, Â§ 664",
     faqs: [
       {
         question: "Does Maine have daily overtime?",
@@ -676,12 +592,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "MD",
     name: "Maryland",
     slug: "maryland",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Maryland follows federal FLSA overtime rules for most employees. Maryland does not have state-specific daily overtime requirements. Employees in Maryland must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Maryland state minimum wage is higher than federal, and Maryland has specific overtime rules for certain industries like agriculture.",
-    lawReference: "Maryland Labor and Employment Code § 3-415. Federal FLSA also applies.",
+    lawReference: "Maryland Labor and Employment Code Â§ 3-415. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Maryland have daily overtime?",
@@ -709,12 +621,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "MA",
     name: "Massachusetts",
     slug: "massachusetts",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Massachusetts follows federal FLSA overtime rules for most employees. Massachusetts does not have state-specific daily overtime requirements. Employees in Massachusetts must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Massachusetts state minimum wage is higher than federal, and Massachusetts has a higher salary threshold for exempt employees than federal standards.",
-    lawReference: "Massachusetts General Laws Chapter 151, § 1A",
+    lawReference: "Massachusetts General Laws Chapter 151, Â§ 1A",
     faqs: [
       {
         question: "Does Massachusetts have daily overtime?",
@@ -742,12 +650,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "MI",
     name: "Michigan",
     slug: "michigan",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Michigan follows federal FLSA overtime rules for most employees. Michigan does not have state-specific daily overtime requirements. Employees in Michigan must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Michigan state minimum wage is higher than federal, and overtime calculations follow federal standards.",
-    lawReference: "Michigan Compiled Laws § 408.934a. Federal FLSA also applies.",
+    lawReference: "Michigan Compiled Laws Â§ 408.934a. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Michigan have daily overtime?",
@@ -775,12 +679,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "MN",
     name: "Minnesota",
     slug: "minnesota",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Minnesota follows federal FLSA overtime rules for most employers. Minnesota has a state overtime law that triggers overtime at 48 hours in a workweek for very small employers, but federal FLSA's 40-hour threshold applies to most employers. Employees in Minnesota typically receive overtime pay at 1.5 times their regular rate for hours over 40 in a workweek under federal FLSA.",
-    lawReference: "Minnesota Statutes § 177.25. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Minnesota Statutes Â§ 177.25. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Minnesota have daily overtime?",
@@ -808,12 +708,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "MS",
     name: "Mississippi",
     slug: "mississippi",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Mississippi follows federal FLSA overtime rules. Mississippi does not have state-specific daily overtime requirements. Employees in Mississippi must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Mississippi state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Mississippi does not have a state overtime law. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Mississippi does not have a state overtime law. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Mississippi have daily overtime?",
@@ -841,12 +737,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "MO",
     name: "Missouri",
     slug: "missouri",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Missouri follows federal FLSA overtime rules. Missouri does not have state-specific daily overtime requirements. Employees in Missouri must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Missouri state minimum wage is higher than federal, but overtime calculations follow federal standards.",
-    lawReference: "Missouri Revised Statutes § 290.505. Federal FLSA also applies.",
+    lawReference: "Missouri Revised Statutes Â§ 290.505. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Missouri have daily overtime?",
@@ -874,12 +766,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "MT",
     name: "Montana",
     slug: "montana",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Montana follows federal FLSA overtime rules. Montana does not have state-specific daily overtime requirements. Employees in Montana must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Montana state minimum wage is higher than federal, but overtime calculations follow federal standards.",
-    lawReference: "Montana Code § 39-3-405. Federal FLSA also applies.",
+    lawReference: "Montana Code Â§ 39-3-405. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Montana have daily overtime?",
@@ -907,12 +795,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "NE",
     name: "Nebraska",
     slug: "nebraska",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Nebraska follows federal FLSA overtime rules. Nebraska does not have state-specific daily overtime requirements. Employees in Nebraska must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Nebraska state minimum wage is higher than federal, but overtime calculations follow federal standards.",
-    lawReference: "Nebraska Revised Statutes § 48-1201. Federal FLSA also applies.",
+    lawReference: "Nebraska Revised Statutes Â§ 48-1201. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Nebraska have daily overtime?",
@@ -940,32 +824,28 @@ export const STATES_DATA: StateInfo[] = [
     code: "NV",
     name: "Nevada",
     slug: "nevada",
-    dailyOT: true,
-    dailyOTThreshold: 8,
-    doubleOT: false,
-    doubleOTThreshold: 0,
-    intro: "Nevada has state-specific overtime rules that go beyond federal FLSA. Nevada requires daily overtime pay at 1.5 times the regular rate for hours worked over 8 in a single workday, for employees who do not receive qualifying health benefits from their employer. Employees who receive qualifying health benefits may have different overtime rules. Nevada also follows the federal 40-hour weekly overtime rule.",
-    lawReference: "Nevada Revised Statutes § 608.018",
+    intro: "Effective July 1, 2026, Nevada generally requires daily overtime at 1.5 times the regular rate after 8 hours in a workday for employees earning less than $18 per hour. Employees earning $18 per hour or more generally receive overtime after 40 hours in a workweek rather than under the daily threshold. Exemptions may apply.",
+    lawReference: "Nevada Revised Statutes Â§ 608.018",
     faqs: [
       {
         question: "Does Nevada have daily overtime?",
-        answer: "Yes. Nevada requires overtime pay at 1.5x for hours over 8 in a single workday for employees without qualifying health benefits.",
+        answer: "Effective July 1, 2026, Nevada generally requires daily overtime after 8 hours for employees earning less than $18 per hour.",
       },
       {
         question: "What is the overtime rate in Nevada?",
-        answer: "Nevada overtime is 1.5 times the regular rate for hours over 8 in a workday or over 40 in a workweek.",
+        answer: "Nevada overtime is 1.5 times the regular rate. The daily threshold generally applies below $18 per hour, while the 40-hour weekly threshold applies at all wage levels for covered employees.",
       },
       {
         question: "Does Nevada have double overtime?",
         answer: "No. Nevada does not require double-time pay. All overtime is paid at 1.5 times the regular rate.",
       },
       {
-        question: "Are employees with health benefits treated differently?",
-        answer: "Yes. Employees who receive qualifying health benefits from their employer may have different overtime thresholds under Nevada law.",
+        question: "What is Nevada's daily-overtime wage threshold?",
+        answer: "For the period beginning July 1, 2026, the daily-overtime threshold generally applies to employees earning less than $18 per hour.",
       },
       {
         question: "How is overtime calculated in Nevada?",
-        answer: "Overtime is 1.5 times the regular rate for hours over 8 in a workday or over 40 in a workweek, depending on health benefits status.",
+        answer: "This calculator applies daily overtime after 8 hours when the hourly rate is below $18, then reconciles any remaining weekly overtime after 40 hours without counting the same hour twice.",
       },
     ],
   },
@@ -973,12 +853,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "NH",
     name: "New Hampshire",
     slug: "new-hampshire",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "New Hampshire follows federal FLSA overtime rules. New Hampshire does not have state-specific daily overtime requirements. Employees in New Hampshire must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. New Hampshire state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "New Hampshire Revised Statutes § 279:21. Federal FLSA applies.",
+    lawReference: "New Hampshire Revised Statutes Â§ 279:21. Federal FLSA applies.",
     faqs: [
       {
         question: "Does New Hampshire have daily overtime?",
@@ -1006,12 +882,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "NJ",
     name: "New Jersey",
     slug: "new-jersey",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "New Jersey follows federal FLSA overtime rules for most employees. New Jersey does not have state-specific daily overtime requirements. Employees in New Jersey must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. New Jersey state minimum wage is higher than federal, and New Jersey has a higher salary threshold for exempt employees than federal standards.",
-    lawReference: "New Jersey Statutes § 34:11-56a4. Federal FLSA also applies.",
+    lawReference: "New Jersey Statutes Â§ 34:11-56a4. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does New Jersey have daily overtime?",
@@ -1039,12 +911,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "NM",
     name: "New Mexico",
     slug: "new-mexico",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "New Mexico follows federal FLSA overtime rules. New Mexico does not have state-specific daily overtime requirements. Employees in New Mexico must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. New Mexico state minimum wage is higher than federal, but overtime calculations follow federal standards.",
-    lawReference: "New Mexico Statutes § 50-4-22. Federal FLSA also applies.",
+    lawReference: "New Mexico Statutes Â§ 50-4-22. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does New Mexico have daily overtime?",
@@ -1072,12 +940,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "NY",
     name: "New York",
     slug: "new-york",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "New York follows federal FLSA overtime rules for most employees. New York does not have state-specific daily overtime requirements for general employment. Employees in New York must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. New York has a higher salary threshold for exempt employees than federal standards, and some industries have specific overtime rules. New York also has spread-of-hours pay requirements that may affect overtime calculations.",
-    lawReference: "New York Labor Law § 651. New York Wage Orders. Federal FLSA also applies.",
+    lawReference: "New York Labor Law Â§ 651. New York Wage Orders. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does New York have daily overtime?",
@@ -1105,12 +969,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "NC",
     name: "North Carolina",
     slug: "north-carolina",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "North Carolina follows federal FLSA overtime rules. North Carolina does not have state-specific daily overtime requirements. Employees in North Carolina must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. North Carolina state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "North Carolina General Statutes § 95-25.4. Federal FLSA also applies.",
+    lawReference: "North Carolina General Statutes Â§ 95-25.4. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does North Carolina have daily overtime?",
@@ -1138,12 +998,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "ND",
     name: "North Dakota",
     slug: "north-dakota",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "North Dakota follows federal FLSA overtime rules. North Dakota does not have state-specific daily overtime requirements. Employees in North Dakota must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. North Dakota state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "North Dakota Century Code § 34-06-02.1. Federal FLSA applies.",
+    lawReference: "North Dakota Century Code Â§ 34-06-02.1. Federal FLSA applies.",
     faqs: [
       {
         question: "Does North Dakota have daily overtime?",
@@ -1171,12 +1027,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "OH",
     name: "Ohio",
     slug: "ohio",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Ohio follows federal FLSA overtime rules. Ohio does not have state-specific daily overtime requirements. Employees in Ohio must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Ohio state minimum wage is higher than federal for employers with annual gross receipts over $342,000, but overtime calculations follow federal standards.",
-    lawReference: "Ohio Revised Code § 4111.02. Federal FLSA also applies.",
+    lawReference: "Ohio Revised Code Â§ 4111.02. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Ohio have daily overtime?",
@@ -1204,12 +1056,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "OK",
     name: "Oklahoma",
     slug: "oklahoma",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Oklahoma follows federal FLSA overtime rules for most employers. Oklahoma does not have state-specific daily overtime requirements. Employees in Oklahoma must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Oklahoma state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Oklahoma Statutes § 40-197.1. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Oklahoma Statutes Â§ 40-197.1. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Oklahoma have daily overtime?",
@@ -1237,16 +1085,12 @@ export const STATES_DATA: StateInfo[] = [
     code: "OR",
     name: "Oregon",
     slug: "oregon",
-    dailyOT: true,
-    dailyOTThreshold: 10,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Oregon has state-specific overtime rules for certain industries. Oregon requires daily overtime pay at 1.5 times the regular rate for hours worked over 10 in a single workday for workers in manufacturing establishments. Most other Oregon employees follow federal FLSA's 40-hour weekly overtime rule. Oregon also has specific overtime rules for workers in canneries and certain other industries.",
-    lawReference: "Oregon Revised Statutes § 653.265. Oregon Wage Orders.",
+    lawReference: "Oregon Revised Statutes Â§ 653.265. Oregon Wage Orders.",
     faqs: [
       {
         question: "Does Oregon have daily overtime?",
-        answer: "Yes, but only for manufacturing workers. Oregon requires overtime at 1.5x for hours over 10 in a workday for manufacturing employees.",
+        answer: "Not for most employees. Oregon's daily overtime after 10 hours applies to manufacturing establishments and certain other specialized work.",
       },
       {
         question: "What is the overtime rate in Oregon?",
@@ -1258,11 +1102,11 @@ export const STATES_DATA: StateInfo[] = [
       },
       {
         question: "Which Oregon workers have daily overtime?",
-        answer: "Manufacturing workers in Oregon have daily overtime at 10 hours. Most other workers follow federal weekly overtime rules.",
+        answer: "Workers in manufacturing establishments and certain canneries have special daily overtime protections. Most other workers follow the weekly overtime rule.",
       },
       {
         question: "How is overtime calculated in Oregon?",
-        answer: "Overtime is 1.5 times the regular rate for hours over 40 in a workweek, with daily overtime for manufacturing workers at 10 hours.",
+        answer: "This general calculator applies overtime after 40 hours in a workweek. Manufacturing and cannery workers should use the applicable industry rule because daily overtime may also apply.",
       },
     ],
   },
@@ -1270,10 +1114,6 @@ export const STATES_DATA: StateInfo[] = [
     code: "PA",
     name: "Pennsylvania",
     slug: "pennsylvania",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Pennsylvania follows federal FLSA overtime rules. Pennsylvania does not have state-specific daily overtime requirements. Employees in Pennsylvania must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Pennsylvania state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
     lawReference: "Pennsylvania Minimum Wage Act. Federal FLSA also applies.",
     faqs: [
@@ -1303,12 +1143,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "RI",
     name: "Rhode Island",
     slug: "rhode-island",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Rhode Island follows federal FLSA overtime rules for most employees. Rhode Island does not have state-specific daily overtime requirements for general employment. Employees in Rhode Island must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Rhode Island has Sunday premium pay requirements for certain retail employees.",
-    lawReference: "Rhode Island General Laws § 28-12-4.1. Federal FLSA also applies.",
+    lawReference: "Rhode Island General Laws Â§ 28-12-4.1. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Rhode Island have daily overtime?",
@@ -1336,12 +1172,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "SC",
     name: "South Carolina",
     slug: "south-carolina",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "South Carolina follows federal FLSA overtime rules. South Carolina does not have state-specific daily overtime requirements. Employees in South Carolina must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. South Carolina state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "South Carolina does not have a state overtime law. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "South Carolina does not have a state overtime law. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does South Carolina have daily overtime?",
@@ -1369,12 +1201,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "SD",
     name: "South Dakota",
     slug: "south-dakota",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "South Dakota follows federal FLSA overtime rules. South Dakota does not have state-specific daily overtime requirements. Employees in South Dakota must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. South Dakota state minimum wage is higher than federal, but overtime calculations follow federal standards.",
-    lawReference: "South Dakota Codified Laws § 60-11-7.1. Federal FLSA also applies.",
+    lawReference: "South Dakota Codified Laws Â§ 60-11-7.1. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does South Dakota have daily overtime?",
@@ -1402,12 +1230,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "TN",
     name: "Tennessee",
     slug: "tennessee",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Tennessee follows federal FLSA overtime rules. Tennessee does not have state-specific daily overtime requirements. Employees in Tennessee must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Tennessee state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Tennessee does not have a state overtime law. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Tennessee does not have a state overtime law. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Tennessee have daily overtime?",
@@ -1435,12 +1259,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "TX",
     name: "Texas",
     slug: "texas",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Texas follows federal FLSA overtime rules. Texas does not have state-specific daily overtime requirements. Employees in Texas must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Texas state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Texas Labor Code § 62. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Texas Labor Code Â§ 62. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Texas have daily overtime?",
@@ -1468,12 +1288,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "UT",
     name: "Utah",
     slug: "utah",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Utah follows federal FLSA overtime rules. Utah does not have state-specific daily overtime requirements. Employees in Utah must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Utah state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Utah Code § 34-40-101. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Utah Code Â§ 34-40-101. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Utah have daily overtime?",
@@ -1501,12 +1317,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "VT",
     name: "Vermont",
     slug: "vermont",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Vermont follows federal FLSA overtime rules for most employees. Vermont does not have state-specific daily overtime requirements. Employees in Vermont must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Vermont state minimum wage is higher than federal, and Vermont has specific overtime rules for certain industries.",
-    lawReference: "Vermont Statutes Title 21, § 384. Federal FLSA also applies.",
+    lawReference: "Vermont Statutes Title 21, Â§ 384. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Vermont have daily overtime?",
@@ -1534,12 +1346,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "VA",
     name: "Virginia",
     slug: "virginia",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Virginia follows federal FLSA overtime rules. Virginia does not have state-specific daily overtime requirements. Employees in Virginia must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Virginia state minimum wage is higher than federal, but overtime calculations follow federal standards.",
-    lawReference: "Virginia Code § 40.1-29.1. Federal FLSA also applies.",
+    lawReference: "Virginia Code Â§ 40.1-29.1. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Virginia have daily overtime?",
@@ -1567,12 +1375,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "WA",
     name: "Washington",
     slug: "washington",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Washington State follows federal FLSA overtime rules for most employees. Washington does not have state-specific daily overtime requirements. Employees in Washington must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Washington state minimum wage is one of the highest in the country, and Washington has a higher salary threshold for exempt employees than federal standards.",
-    lawReference: "Washington Revised Code § 49.46.130. Federal FLSA also applies.",
+    lawReference: "Washington Revised Code Â§ 49.46.130. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Washington State have daily overtime?",
@@ -1600,12 +1404,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "WV",
     name: "West Virginia",
     slug: "west-virginia",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "West Virginia follows federal FLSA overtime rules. West Virginia does not have state-specific daily overtime requirements. Employees in West Virginia must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. West Virginia state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "West Virginia Code § 21-5C-2. Federal FLSA also applies.",
+    lawReference: "West Virginia Code Â§ 21-5C-2. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does West Virginia have daily overtime?",
@@ -1633,12 +1433,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "WI",
     name: "Wisconsin",
     slug: "wisconsin",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Wisconsin follows federal FLSA overtime rules. Wisconsin does not have state-specific daily overtime requirements. Employees in Wisconsin must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Wisconsin state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Wisconsin Statutes § 104.01. Federal FLSA also applies.",
+    lawReference: "Wisconsin Statutes Â§ 104.01. Federal FLSA also applies.",
     faqs: [
       {
         question: "Does Wisconsin have daily overtime?",
@@ -1666,12 +1462,8 @@ export const STATES_DATA: StateInfo[] = [
     code: "WY",
     name: "Wyoming",
     slug: "wyoming",
-    dailyOT: false,
-    dailyOTThreshold: 0,
-    doubleOT: false,
-    doubleOTThreshold: 0,
     intro: "Wyoming follows federal FLSA overtime rules. Wyoming does not have state-specific daily overtime requirements. Employees in Wyoming must receive overtime pay at 1.5 times their regular rate for any hours worked over 40 in a single workweek. Wyoming state minimum wage matches the federal minimum wage, and overtime calculations follow federal standards.",
-    lawReference: "Wyoming Statutes § 27-7-101. Federal FLSA applies (29 U.S.C. § 207).",
+    lawReference: "Wyoming Statutes Â§ 27-7-101. Federal FLSA applies (29 U.S.C. Â§ 207).",
     faqs: [
       {
         question: "Does Wyoming have daily overtime?",
