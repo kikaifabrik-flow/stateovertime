@@ -280,9 +280,9 @@ export default function StatePage({ params }: { params: { state: string } }) {
           <div className="text-center pt-4">
             <Link
               href="/"
-              className="text-blue-600 hover:underline font-semibold"
+              className="inline-flex items-center rounded-lg border border-blue-200 bg-white px-5 py-3 text-blue-700 shadow-sm hover:border-blue-300 hover:bg-blue-50 hover:text-blue-900 font-semibold transition-colors"
             >
-              &larr; Back to the main overtime calculator
+              &larr; Return to the main calculator
             </Link>
           </div>
         </section>
