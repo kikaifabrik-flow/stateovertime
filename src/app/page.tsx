@@ -93,7 +93,7 @@ interface CalcResult {
 export default function Home() {
   const router = useRouter();
   const [hourlyRate, setHourlyRate] = useState<string>("20");
-  const state = "CA";
+  const [state, setState] = useState<string>("");
   const [hours, setHours] = useState<DayHours>({
     mon: 8,
     tue: 8,
@@ -118,11 +118,17 @@ export default function Home() {
 
     if (!selectedState) return;
 
+    setState(stateCode);
     const slug = selectedState.name.toLowerCase().replace(/\s+/g, "-");
     router.push(`/overtime-calculator/${slug}`);
   };
 
   const calculate = () => {
+    if (!state) {
+      setResult(null);
+      return;
+    }
+
     const rate = parseFloat(hourlyRate) || 0;
     const dayHoursArr = DAYS.map((d) => hours[d.key as keyof DayHours]);
     const totalHours = dayHoursArr.reduce((a, b) => a + b, 0);
@@ -222,18 +228,15 @@ export default function Home() {
               onChange={(e) => handleStateChange(e.target.value)}
               className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
             >
+              <option value="" disabled>
+                Select State
+              </option>
               {STATES.map((s) => (
                 <option key={s.code} value={s.code}>
                   {s.name}
                 </option>
               ))}
             </select>
-            <Link
-              href="/overtime-calculator/california"
-              className="inline-flex mt-2 text-sm font-semibold text-blue-700 hover:text-blue-900 hover:underline"
-            >
-              Open the California calculator page &rarr;
-            </Link>
           </div>
 
           <div className="mb-6">
@@ -262,7 +265,8 @@ export default function Home() {
 
           <button
             onClick={calculate}
-            className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+            disabled={!state}
+            className="w-full bg-blue-900 hover:bg-blue-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors"
           >
             Calculate Overtime Pay
           </button>
