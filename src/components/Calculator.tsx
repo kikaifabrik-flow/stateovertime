@@ -78,6 +78,10 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
           else { regularHours += dh; }
         }
       }
+
+      const weeklyOtHours = Math.max(0, regularHours - 40);
+      regularHours -= weeklyOtHours;
+      otHours += weeklyOtHours;
     } else {
       regularHours = Math.min(totalHours, 40);
       otHours = Math.max(0, totalHours - 40);
