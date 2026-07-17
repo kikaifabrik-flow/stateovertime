@@ -58,6 +58,31 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
       Number(consecutiveOvertimeHours) > 168);
 
   useEffect(() => {
+    const savedDraft = sessionStorage.getItem("stateovertime-calculator-draft");
+
+    if (savedDraft) {
+      try {
+        const draft = JSON.parse(savedDraft) as {
+          hourlyRate?: unknown;
+          hours?: Record<string, unknown>;
+        };
+        const validHours = Object.fromEntries(
+          DAYS.flatMap((day) => {
+            const value = draft.hours?.[day.key];
+            return typeof value === "number" && value >= 0 && value <= 24
+              ? [[day.key, value]]
+              : [];
+          }),
+        );
+
+        if (typeof draft.hourlyRate === "string") setHourlyRate(draft.hourlyRate);
+        setHours((currentHours) => ({ ...currentHours, ...validHours }));
+      } catch {
+        // Ignore malformed navigation data and keep the calculator defaults.
+      }
+
+      sessionStorage.removeItem("stateovertime-calculator-draft");
+    }
     setResult(null);
     setError(null);
     setConsecutiveOvertimeHours("0");
@@ -84,6 +109,10 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
     setResult(null);
     setError(null);
     const slug = selectedState.name.toLowerCase().replace(/\s+/g, "-");
+    sessionStorage.setItem(
+      "stateovertime-calculator-draft",
+      JSON.stringify({ hourlyRate, hours }),
+    );
     router.push(`/overtime-calculator/${slug}`);
   };
 
