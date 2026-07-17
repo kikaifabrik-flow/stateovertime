@@ -37,12 +37,9 @@ export default function ShareCalculator() {
   const encodedText = encodeURIComponent(SHARE_TEXT);
 
   return (
-    <aside className="mt-8 rounded-xl border border-blue-100 bg-blue-50 p-6 md:p-8" aria-labelledby="share-calculator-heading">
-      <h2 id="share-calculator-heading" className="text-xl font-semibold text-slate-900">
-        Share this free overtime calculator
-      </h2>
-      <p className="mt-2 text-sm leading-relaxed text-slate-600">
-        If you like this free overtime calculator, please share it with friends, coworkers, or anyone who may find it useful.
+    <aside className="mt-8 rounded-xl border border-blue-100 bg-blue-50 p-6 md:p-8" aria-label="Share calculator">
+      <p className="text-sm leading-relaxed text-slate-700">
+        If you like this calculator, please share it with friends, coworkers, or anyone who may find it useful.
       </p>
 
       <div className="mt-5 flex flex-wrap gap-3">
