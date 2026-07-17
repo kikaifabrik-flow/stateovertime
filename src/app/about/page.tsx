@@ -34,7 +34,7 @@ export default function AboutPage() {
               <li><strong className="font-semibold">Federal FLSA compliance</strong> for all 50 states plus DC</li>
               <li><strong className="font-semibold">California daily overtime</strong> (over 8 hours = 1.5x, over 12 hours = 2x)</li>
               <li><strong className="font-semibold">Alaska & Nevada daily overtime</strong> rules</li>
-              <li><strong className="font-semibold">No signup required</strong> — your data stays in your browser</li>
+              <li><strong className="font-semibold">No signup required</strong></li>
             </ul>
           </div>
 
