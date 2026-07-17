@@ -226,13 +226,19 @@ export default function Home() {
             <select
               value={state}
               onChange={(e) => handleStateChange(e.target.value)}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+              className={`w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white ${
+                state ? "text-slate-900 font-normal" : "text-blue-500 font-semibold"
+              }`}
             >
-              <option value="" disabled>
+              <option value="" disabled className="text-blue-500 font-semibold">
                 Select State
               </option>
               {STATES.map((s) => (
-                <option key={s.code} value={s.code}>
+                <option
+                  key={s.code}
+                  value={s.code}
+                  className="text-slate-900 font-normal"
+                >
                   {s.name}
                 </option>
               ))}
