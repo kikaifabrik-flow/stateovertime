@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const STATES = [
   { code: "AL", name: "Alabama" }, { code: "AK", name: "Alaska" }, { code: "AZ", name: "Arizona" },
@@ -32,15 +33,29 @@ const DAYS = [
 const DAILY_OT_STATES = ["CA", "AK", "NV"];
 
 export default function Calculator({ defaultState = "CA" }: { defaultState?: string }) {
+  const router = useRouter();
   const [hourlyRate, setHourlyRate] = useState("20");
-  const [state, setState] = useState(defaultState);
   const [hours, setHours] = useState({
     mon: 8, tue: 8, wed: 8, thu: 8, fri: 8, sat: 0, sun: 0,
   });
   const [result, setResult] = useState<any>(null);
+  const state = defaultState;
+
+  useEffect(() => {
+    setResult(null);
+  }, [defaultState]);
 
   const handleHourChange = (day: string, value: string) => {
     setHours({ ...hours, [day]: parseFloat(value) || 0 });
+  };
+
+  const handleStateChange = (stateCode: string) => {
+    const selectedState = STATES.find((stateItem) => stateItem.code === stateCode);
+
+    if (!selectedState) return;
+
+    const slug = selectedState.name.toLowerCase().replace(/\s+/g, "-");
+    router.push(`/overtime-calculator/${slug}`);
   };
 
   const calculate = () => {
@@ -100,7 +115,7 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
         <label className="block text-sm font-medium text-slate-700 mb-2">State</label>
         <select
           value={state}
-          onChange={(e) => setState(e.target.value)}
+          onChange={(e) => handleStateChange(e.target.value)}
           className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
         >
           {STATES.map((s) => (
