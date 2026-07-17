@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const STATES: { code: string; name: string }[] = [
@@ -90,8 +91,9 @@ interface CalcResult {
 }
 
 export default function Home() {
+  const router = useRouter();
   const [hourlyRate, setHourlyRate] = useState<string>("20");
-  const [state, setState] = useState<string>("CA");
+  const state = "CA";
   const [hours, setHours] = useState<DayHours>({
     mon: 8,
     tue: 8,
@@ -109,6 +111,15 @@ export default function Home() {
       ...hours,
       [day]: parseFloat(value) || 0,
     });
+  };
+
+  const handleStateChange = (stateCode: string) => {
+    const selectedState = STATES.find((stateItem) => stateItem.code === stateCode);
+
+    if (!selectedState) return;
+
+    const slug = selectedState.name.toLowerCase().replace(/\s+/g, "-");
+    router.push(`/overtime-calculator/${slug}`);
   };
 
   const calculate = () => {
@@ -208,7 +219,7 @@ export default function Home() {
             </label>
             <select
               value={state}
-              onChange={(e) => setState(e.target.value)}
+              onChange={(e) => handleStateChange(e.target.value)}
               className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
             >
               {STATES.map((s) => (
@@ -217,6 +228,12 @@ export default function Home() {
                 </option>
               ))}
             </select>
+            <Link
+              href="/overtime-calculator/california"
+              className="inline-flex mt-2 text-sm font-semibold text-blue-700 hover:text-blue-900 hover:underline"
+            >
+              Open the California calculator page &rarr;
+            </Link>
           </div>
 
           <div className="mb-6">
