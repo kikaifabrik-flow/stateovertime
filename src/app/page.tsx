@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { calculateOvertimePay, type CalcResult } from "../lib/overtime";
 
 const STATES: { code: string; name: string }[] = [
   { code: "AL", name: "Alabama" },
@@ -68,8 +69,6 @@ const DAYS: { key: string; label: string }[] = [
   { key: "sun", label: "Sunday" },
 ];
 
-const DAILY_OT_STATES = ["CA", "AK", "NV"];
-
 interface DayHours {
   mon: number;
   tue: number;
@@ -78,16 +77,6 @@ interface DayHours {
   fri: number;
   sat: number;
   sun: number;
-}
-
-interface CalcResult {
-  regularHours: number;
-  otHours: number;
-  doubleOtHours: number;
-  regularPay: number;
-  otPay: number;
-  doubleOtPay: number;
-  grossPay: number;
 }
 
 export default function Home() {
@@ -105,12 +94,29 @@ export default function Home() {
   });
 
   const [result, setResult] = useState<CalcResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const currentYear = new Date().getFullYear();
+  const rateIsInvalid =
+    hourlyRate !== "" &&
+    (!Number.isFinite(Number(hourlyRate)) || Number(hourlyRate) < 0);
+  const hoursAreInvalid = DAYS.some((day) => {
+    const value = hours[day.key as keyof DayHours];
+    return value < 0 || value > 24;
+  });
 
   const handleHourChange = (day: string, value: string) => {
     setHours({
       ...hours,
       [day]: parseFloat(value) || 0,
     });
+    setResult(null);
+    setError(null);
+  };
+
+  const handleRateChange = (value: string) => {
+    setHourlyRate(value);
+    setResult(null);
+    setError(null);
   };
 
   const handleStateChange = (stateCode: string) => {
@@ -119,6 +125,8 @@ export default function Home() {
     if (!selectedState) return;
 
     setState(stateCode);
+    setResult(null);
+    setError(null);
     const slug = selectedState.name.toLowerCase().replace(/\s+/g, "-");
     router.push(`/overtime-calculator/${slug}`);
   };
@@ -129,59 +137,29 @@ export default function Home() {
       return;
     }
 
-    const rate = parseFloat(hourlyRate) || 0;
+    const rate = Number(hourlyRate);
     const dayHoursArr = DAYS.map((d) => hours[d.key as keyof DayHours]);
-    const totalHours = dayHoursArr.reduce((a, b) => a + b, 0);
 
-    let regularHours = 0;
-    let otHours = 0;
-    let doubleOtHours = 0;
-
-    if (DAILY_OT_STATES.includes(state)) {
-      for (const dh of dayHoursArr) {
-        if (state === "CA") {
-          if (dh > 12) {
-            regularHours += 8;
-            otHours += 4;
-            doubleOtHours += dh - 12;
-          } else if (dh > 8) {
-            regularHours += 8;
-            otHours += dh - 8;
-          } else {
-            regularHours += dh;
-          }
-        } else {
-          if (dh > 8) {
-            regularHours += 8;
-            otHours += dh - 8;
-          } else {
-            regularHours += dh;
-          }
-        }
-      }
-
-      const weeklyOtHours = Math.max(0, regularHours - 40);
-      regularHours -= weeklyOtHours;
-      otHours += weeklyOtHours;
-    } else {
-      regularHours = Math.min(totalHours, 40);
-      otHours = Math.max(0, totalHours - 40);
+    if (!Number.isFinite(rate) || rate < 0) {
+      setResult(null);
+      setError("Enter an hourly rate of $0 or more.");
+      return;
     }
 
-    const regularPay = regularHours * rate;
-    const otPay = otHours * rate * 1.5;
-    const doubleOtPay = doubleOtHours * rate * 2;
-    const grossPay = regularPay + otPay + doubleOtPay;
+    if (dayHoursArr.some((dayHours) => dayHours < 0 || dayHours > 24)) {
+      setResult(null);
+      setError("Enter between 0 and 24 hours for each day.");
+      return;
+    }
 
-    setResult({
-      regularHours,
-      otHours,
-      doubleOtHours,
-      regularPay,
-      otPay,
-      doubleOtPay,
-      grossPay,
-    });
+    setError(null);
+    setResult(
+      calculateOvertimePay({
+        stateCode: state,
+        hourlyRate: rate,
+        dayHours: dayHoursArr,
+      }),
+    );
   };
 
   const formatCurrency = (n: number) =>
@@ -203,31 +181,42 @@ export default function Home() {
       </header>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
+        <form
+          className="bg-white rounded-xl shadow-md p-6 md:p-8"
+          onSubmit={(event) => {
+            event.preventDefault();
+            calculate();
+          }}
+          noValidate
+        >
           <h2 className="text-xl font-semibold text-slate-900 mb-6">
             Enter your work hours
           </h2>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label htmlFor="home-hourly-rate" className="block text-sm font-medium text-slate-700 mb-2">
               Hourly Rate ($)
             </label>
             <input
+              id="home-hourly-rate"
               type="number"
               value={hourlyRate}
-              onChange={(e) => setHourlyRate(e.target.value)}
+              onChange={(e) => handleRateChange(e.target.value)}
               min="0"
               step="0.01"
+              aria-invalid={rateIsInvalid}
+              aria-describedby={error ? "home-calculator-error" : undefined}
               className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               placeholder="20.00"
             />
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label htmlFor="home-state" className="block text-sm font-medium text-slate-700 mb-2">
               State
             </label>
             <select
+              id="home-state"
               value={state}
               onChange={(e) => handleStateChange(e.target.value)}
               className={`w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white ${
@@ -249,41 +238,50 @@ export default function Home() {
             </select>
           </div>
 
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+          <fieldset className="mb-6">
+            <legend className="block text-sm font-medium text-slate-700 mb-2">
               Hours worked per day
-            </label>
+            </legend>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {DAYS.map((day) => (
                 <div key={day.key}>
-                  <label className="block text-xs text-slate-500 mb-1">
+                  <label htmlFor={`home-${day.key}`} className="block text-xs text-slate-500 mb-1">
                     {day.label}
                   </label>
                   <input
+                    id={`home-${day.key}`}
                     type="number"
                     value={hours[day.key as keyof DayHours]}
                     onChange={(e) => handleHourChange(day.key, e.target.value)}
                     min="0"
                     max="24"
                     step="0.5"
+                    aria-invalid={hoursAreInvalid && (hours[day.key as keyof DayHours] < 0 || hours[day.key as keyof DayHours] > 24)}
+                    aria-describedby={error ? "home-calculator-error" : undefined}
                     className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                   />
                 </div>
               ))}
             </div>
-          </div>
+          </fieldset>
+
+          {error && (
+            <p id="home-calculator-error" role="alert" className="mb-4 text-sm font-semibold text-red-700">
+              {error}
+            </p>
+          )}
 
           <button
-            onClick={calculate}
+            type="submit"
             disabled={!state}
             className="w-full bg-blue-900 hover:bg-blue-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors"
           >
             Calculate Overtime Pay
           </button>
-        </div>
+        </form>
 
         {result && (
-          <div className="mt-6 bg-white rounded-xl shadow-md p-6 md:p-8">
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 md:p-8" aria-live="polite">
             <h2 className="text-xl font-semibold text-slate-900 mb-4">
               Your Pay Breakdown
             </h2>
@@ -355,12 +353,22 @@ export default function Home() {
               hours/day = 1.5x, over 12 hours/day = 2x.
             </p>
             <p>
-              <strong>Alaska &amp; Nevada:</strong> Daily overtime applies —
-              over 8 hours/day = 1.5x.
+              <strong>Alaska:</strong> Daily overtime generally applies after
+              8 hours/day at 1.5x.
             </p>
             <p>
-              <strong>All other states:</strong> Follow federal FLSA rules
-              (weekly overtime only).
+              <strong>Colorado:</strong> Overtime generally applies after 12
+              hours/day or 12 consecutive hours at 1.5x.
+            </p>
+            <p>
+              <strong>Nevada:</strong> Daily overtime generally applies after
+              8 hours/day when the hourly rate is below $18; weekly overtime
+              still applies after 40 hours.
+            </p>
+            <p>
+              <strong>Other state rules:</strong> Some states have separate
+              seventh-day, industry, or prevailing-wage rules. Review the
+              selected state page for limitations.
             </p>
           </div>
         </div>
@@ -412,7 +420,7 @@ export default function Home() {
           </nav>
 
           <p className="text-sm text-slate-500">
-            © 2026 StateOvertime.com — Free overtime calculator for US workers.
+            © {currentYear} StateOvertime.com — Free overtime calculator for US workers.
           </p>
           <p className="text-xs text-slate-400 mt-2">
             This tool provides estimates only. Consult your HR department or

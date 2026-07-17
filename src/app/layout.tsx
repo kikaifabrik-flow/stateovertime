@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,8 +14,6 @@ export const metadata: Metadata = {
   },
 
   verification: {
-    google: "ca-pub-8738292939862414",
-
     other: {
       "msvalidate.01": "F46C57B6472F56041E049856E3333943",
     },
@@ -32,23 +29,21 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Google Analytics */}
-        <Script
+        <script
+          async
           src="https://www.googletagmanager.com/gtag/js?id=G-GN0GB3QYYT"
-          strategy="afterInteractive"
         />
 
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-              window.dataLayer.push(arguments);
-            }
-
-            gtag('js', new Date());
-            gtag('config', 'G-GN0GB3QYYT');
-          `}
-        </Script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-GN0GB3QYYT');
+            `,
+          }}
+        />
 
         {/* Google AdSense */}
         <script
