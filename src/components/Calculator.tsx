@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getStateOvertimeRule } from "../data/overtimeRules";
+import { calculateOvertimePay, type CalcResult } from "../lib/overtime";
 
 const STATES = [
   { code: "AL", name: "Alabama" }, { code: "AK", name: "Alaska" }, { code: "AZ", name: "Arizona" },
@@ -30,23 +32,39 @@ const DAYS = [
   { key: "sun", label: "Sunday" },
 ];
 
-const DAILY_OT_STATES = ["CA", "AK", "NV"];
-
 export default function Calculator({ defaultState = "CA" }: { defaultState?: string }) {
   const router = useRouter();
   const [hourlyRate, setHourlyRate] = useState("20");
   const [hours, setHours] = useState({
     mon: 8, tue: 8, wed: 8, thu: 8, fri: 8, sat: 0, sun: 0,
   });
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<CalcResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const state = defaultState;
+  const rule = getStateOvertimeRule(state);
+  const rateIsInvalid =
+    hourlyRate !== "" &&
+    (!Number.isFinite(Number(hourlyRate)) || Number(hourlyRate) < 0);
+  const hoursAreInvalid = DAYS.some((day) => {
+    const value = hours[day.key as keyof typeof hours];
+    return value < 0 || value > 24;
+  });
 
   useEffect(() => {
     setResult(null);
+    setError(null);
   }, [defaultState]);
 
   const handleHourChange = (day: string, value: string) => {
     setHours({ ...hours, [day]: parseFloat(value) || 0 });
+    setResult(null);
+    setError(null);
+  };
+
+  const handleRateChange = (value: string) => {
+    setHourlyRate(value);
+    setResult(null);
+    setError(null);
   };
 
   const handleStateChange = (stateCode: string) => {
@@ -54,70 +72,71 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
 
     if (!selectedState) return;
 
+    setResult(null);
+    setError(null);
     const slug = selectedState.name.toLowerCase().replace(/\s+/g, "-");
     router.push(`/overtime-calculator/${slug}`);
   };
 
   const calculate = () => {
-    const rate = parseFloat(hourlyRate) || 0;
+    const rate = Number(hourlyRate);
     const dayHoursArr = DAYS.map((d) => hours[d.key as keyof typeof hours]);
-    const totalHours = dayHoursArr.reduce((a, b) => a + b, 0);
 
-    let regularHours = 0;
-    let otHours = 0;
-    let doubleOtHours = 0;
-
-    if (DAILY_OT_STATES.includes(state)) {
-      for (const dh of dayHoursArr) {
-        if (state === "CA") {
-          if (dh > 12) { regularHours += 8; otHours += 4; doubleOtHours += dh - 12; }
-          else if (dh > 8) { regularHours += 8; otHours += dh - 8; }
-          else { regularHours += dh; }
-        } else {
-          if (dh > 8) { regularHours += 8; otHours += dh - 8; }
-          else { regularHours += dh; }
-        }
-      }
-
-      const weeklyOtHours = Math.max(0, regularHours - 40);
-      regularHours -= weeklyOtHours;
-      otHours += weeklyOtHours;
-    } else {
-      regularHours = Math.min(totalHours, 40);
-      otHours = Math.max(0, totalHours - 40);
+    if (!Number.isFinite(rate) || rate < 0) {
+      setResult(null);
+      setError("Enter an hourly rate of $0 or more.");
+      return;
     }
 
-    const regularPay = regularHours * rate;
-    const otPay = otHours * rate * 1.5;
-    const doubleOtPay = doubleOtHours * rate * 2;
-    const grossPay = regularPay + otPay + doubleOtPay;
+    if (dayHoursArr.some((dayHours) => dayHours < 0 || dayHours > 24)) {
+      setResult(null);
+      setError("Enter between 0 and 24 hours for each day.");
+      return;
+    }
 
-    setResult({ regularHours, otHours, doubleOtHours, regularPay, otPay, doubleOtPay, grossPay });
+    setError(null);
+    setResult(
+      calculateOvertimePay({
+        stateCode: state,
+        hourlyRate: rate,
+        dayHours: dayHoursArr,
+      }),
+    );
   };
 
   const formatCurrency = (n: number) =>
     n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
   return (
-    <div>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        calculate();
+      }}
+      noValidate
+    >
       <h2 className="text-xl font-semibold text-slate-900 mb-6">Enter your work hours</h2>
 
       <div className="mb-6">
-        <label className="block text-sm font-medium text-slate-700 mb-2">Hourly Rate ($)</label>
+        <label htmlFor="calculator-hourly-rate" className="block text-sm font-medium text-slate-700 mb-2">Hourly Rate ($)</label>
         <input
+          id="calculator-hourly-rate"
           type="number"
           value={hourlyRate}
-          onChange={(e) => setHourlyRate(e.target.value)}
+          onChange={(e) => handleRateChange(e.target.value)}
           min="0"
           step="0.01"
+          aria-invalid={rateIsInvalid}
+          aria-describedby={error ? "calculator-error" : undefined}
           className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           placeholder="20.00"
         />
       </div>
 
       <div className="mb-6">
-        <label className="block text-sm font-medium text-slate-700 mb-2">State</label>
+        <label htmlFor="calculator-state" className="block text-sm font-medium text-slate-700 mb-2">State</label>
         <select
+          id="calculator-state"
           value={state}
           onChange={(e) => handleStateChange(e.target.value)}
           className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
@@ -128,35 +147,48 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
         </select>
       </div>
 
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-slate-700 mb-2">Hours worked per day</label>
+      <fieldset className="mb-6">
+        <legend className="block text-sm font-medium text-slate-700 mb-2">Hours worked per day</legend>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {DAYS.map((day) => (
             <div key={day.key}>
-              <label className="block text-xs text-slate-500 mb-1">{day.label}</label>
+              <label htmlFor={`calculator-${day.key}`} className="block text-xs text-slate-500 mb-1">{day.label}</label>
               <input
+                id={`calculator-${day.key}`}
                 type="number"
                 value={hours[day.key as keyof typeof hours]}
                 onChange={(e) => handleHourChange(day.key, e.target.value)}
                 min="0"
                 max="24"
                 step="0.5"
+                aria-invalid={hoursAreInvalid && (hours[day.key as keyof typeof hours] < 0 || hours[day.key as keyof typeof hours] > 24)}
+                aria-describedby={error ? "calculator-error" : undefined}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
           ))}
         </div>
-      </div>
+      </fieldset>
+
+      {error && (
+        <p id="calculator-error" role="alert" className="mb-4 text-sm font-semibold text-red-700">
+          {error}
+        </p>
+      )}
 
       <button
-        onClick={calculate}
+        type="submit"
         className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
       >
         Calculate Overtime Pay
       </button>
 
+      {rule.calculatorNote && (
+        <p className="mt-3 text-xs text-slate-500">{rule.calculatorNote}</p>
+      )}
+
       {result && (
-        <div className="mt-6 pt-6 border-t border-slate-200">
+        <div className="mt-6 pt-6 border-t border-slate-200" aria-live="polite">
           <h3 className="text-lg font-semibold text-slate-900 mb-4">Your Pay Breakdown</h3>
           <div className="space-y-3">
             <div className="flex justify-between py-2 border-b border-slate-100">
@@ -194,6 +226,6 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
           </div>
         </div>
       )}
-    </div>
+    </form>
   );
 }

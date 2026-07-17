@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <header className="bg-slate-900 text-white py-8 shadow-lg">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Privacy Policy</h1>
-          <p className="text-slate-300 mt-2 text-sm">Last updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
+          <p className="text-slate-300 mt-2 text-sm">Last updated: July 3, 2026</p>
         </div>
       </header>
 
