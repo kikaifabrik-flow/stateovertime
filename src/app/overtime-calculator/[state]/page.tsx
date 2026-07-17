@@ -3,6 +3,7 @@ import { getStateOvertimeRule } from "../../../data/overtimeRules";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Calculator from "../../../components/Calculator";
+import ShareCalculator from "../../../components/ShareCalculator";
 import StateFAQ from "../../../components/StateFAQ";
 
 export function generateStaticParams() {
@@ -68,6 +69,8 @@ export default function StatePage({ params }: { params: { state: string } }) {
           <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
             <Calculator defaultState={state.code} />
           </div>
+
+          <ShareCalculator />
 
           <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
             {state.code === "CA" ? (

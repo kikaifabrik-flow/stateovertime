@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { calculateOvertimePay, type CalcResult } from "../lib/overtime";
+import ShareCalculator from "../components/ShareCalculator";
 
 const STATES: { code: string; name: string }[] = [
   { code: "AL", name: "Alabama" },
@@ -342,6 +343,8 @@ export default function Home() {
             </div>
           </div>
         )}
+
+        <ShareCalculator />
 
         <div className="mt-8 bg-slate-50 rounded-xl p-6 md:p-8">
           <h3 className="text-lg font-semibold text-slate-900 mb-3">
