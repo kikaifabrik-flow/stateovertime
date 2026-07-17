@@ -1,4 +1,5 @@
 import { STATES_DATA } from "../../../data/states";
+import { getStateOvertimeRule } from "../../../data/overtimeRules";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Calculator from "../../../components/Calculator";
@@ -13,15 +14,14 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { state: string } }) {
   const state = STATES_DATA.find((s) => s.slug === params.state);
 
-  if (!state) return {};
+  if (!state) notFound();
+
+  const currentYear = new Date().getFullYear();
+  const rule = getStateOvertimeRule(state.code);
 
   return {
-    title: `${state.name} Overtime Calculator 2026 | Free OT Pay Calc`,
-    description: `Free ${state.name} overtime calculator. Calculate your OT pay with ${state.name}-specific rules. ${
-      state.dailyOT
-        ? `Daily overtime at ${state.dailyOTThreshold} hours.`
-        : "Federal FLSA weekly overtime."
-    }`,
+    title: `${state.name} Overtime Calculator ${currentYear} | Free OT Pay Calc`,
+    description: `Free ${state.name} overtime calculator. Calculate your OT pay with ${state.name}-specific rules. ${rule.metadataSummary}`,
     alternates: {
       canonical: `/overtime-calculator/${state.slug}`,
     },
@@ -32,6 +32,9 @@ export default function StatePage({ params }: { params: { state: string } }) {
   const state = STATES_DATA.find((s) => s.slug === params.state);
 
   if (!state) notFound();
+
+  const rule = getStateOvertimeRule(state.code);
+  const currentYear = new Date().getFullYear();
 
   const neighboringStates = STATES_DATA.filter(
     (s) => s.code !== state.code,
@@ -219,31 +222,27 @@ export default function StatePage({ params }: { params: { state: string } }) {
 
               <div
                 className={`rounded-lg p-4 ${
-                  state.dailyOT ? "bg-green-50" : "bg-slate-50"
+                  rule.dailyOvertimeThreshold !== undefined ? "bg-green-50" : "bg-slate-50"
                 }`}
               >
                 <h3 className="font-semibold text-slate-900 mb-2">
                   Daily Overtime
                 </h3>
                 <p className="text-slate-700 text-sm">
-                  {state.dailyOT
-                    ? `Hours over ${state.dailyOTThreshold}/day = 1.5x pay`
-                    : "No daily overtime requirement"}
+                  {rule.dailySummary}
                 </p>
               </div>
 
               <div
                 className={`rounded-lg p-4 ${
-                  state.doubleOT ? "bg-purple-50" : "bg-slate-50"
+                  rule.doubleOvertimeThreshold !== undefined ? "bg-purple-50" : "bg-slate-50"
                 }`}
               >
                 <h3 className="font-semibold text-slate-900 mb-2">
                   Double Overtime
                 </h3>
                 <p className="text-slate-700 text-sm">
-                  {state.doubleOT
-                    ? `Hours over ${state.doubleOTThreshold}/day = 2x pay`
-                    : "No double overtime requirement"}
+                  {rule.doubleSummary}
                 </p>
               </div>
 
@@ -316,7 +315,7 @@ export default function StatePage({ params }: { params: { state: string } }) {
           </nav>
 
           <p className="text-sm text-slate-500">
-            © 2026 StateOvertime.com — Free overtime calculator for US workers.
+            © {currentYear} StateOvertime.com — Free overtime calculator for US workers.
           </p>
 
           <p className="text-xs text-slate-400 mt-2">
