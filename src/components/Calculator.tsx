@@ -40,6 +40,8 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
   });
   const [result, setResult] = useState<CalcResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [consecutiveOvertimeHours, setConsecutiveOvertimeHours] = useState("0");
+  const [useOregonIndustryRule, setUseOregonIndustryRule] = useState(false);
   const state = defaultState;
   const rule = getStateOvertimeRule(state);
   const rateIsInvalid =
@@ -49,10 +51,17 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
     const value = hours[day.key as keyof typeof hours];
     return value < 0 || value > 24;
   });
+  const consecutiveHoursAreInvalid =
+    consecutiveOvertimeHours !== "" &&
+    (!Number.isFinite(Number(consecutiveOvertimeHours)) ||
+      Number(consecutiveOvertimeHours) < 0 ||
+      Number(consecutiveOvertimeHours) > 168);
 
   useEffect(() => {
     setResult(null);
     setError(null);
+    setConsecutiveOvertimeHours("0");
+    setUseOregonIndustryRule(false);
   }, [defaultState]);
 
   const handleHourChange = (day: string, value: string) => {
@@ -82,9 +91,24 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
     const rate = Number(hourlyRate);
     const dayHoursArr = DAYS.map((d) => hours[d.key as keyof typeof hours]);
 
-    if (!Number.isFinite(rate) || rate < 0) {
+    const consecutiveHours = Number(consecutiveOvertimeHours);
+
+    if (hourlyRate.trim() === "" || !Number.isFinite(rate) || rate < 0) {
       setResult(null);
       setError("Enter an hourly rate of $0 or more.");
+      return;
+    }
+
+    if (
+      state === "CO" &&
+      (consecutiveOvertimeHours.trim() === "" ||
+        !Number.isFinite(consecutiveHours) ||
+        consecutiveHours < 0 ||
+        consecutiveHours > 168 ||
+        consecutiveHours > dayHoursArr.reduce((sum, hoursWorked) => sum + hoursWorked, 0))
+    ) {
+      setResult(null);
+      setError("Enter Colorado consecutive overtime hours between 0 and the total hours worked.");
       return;
     }
 
@@ -100,6 +124,8 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
         stateCode: state,
         hourlyRate: rate,
         dayHours: dayHoursArr,
+        consecutiveOvertimeHours: state === "CO" ? consecutiveHours : 0,
+        useOregonIndustryRule: state === "OR" && useOregonIndustryRule,
       }),
     );
   };
@@ -118,6 +144,20 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
       <h2 className="text-xl font-semibold text-slate-900 mb-6">Enter your work hours</h2>
 
       <div className="mb-6">
+        <label htmlFor="calculator-state" className="block text-sm font-medium text-slate-700 mb-2">State</label>
+        <select
+          id="calculator-state"
+          value={state}
+          onChange={(e) => handleStateChange(e.target.value)}
+          className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+        >
+          {STATES.map((s) => (
+            <option key={s.code} value={s.code}>{s.name}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="mb-6">
         <label htmlFor="calculator-hourly-rate" className="block text-sm font-medium text-slate-700 mb-2">Hourly Rate ($)</label>
         <input
           id="calculator-hourly-rate"
@@ -131,20 +171,6 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
           className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           placeholder="20.00"
         />
-      </div>
-
-      <div className="mb-6">
-        <label htmlFor="calculator-state" className="block text-sm font-medium text-slate-700 mb-2">State</label>
-        <select
-          id="calculator-state"
-          value={state}
-          onChange={(e) => handleStateChange(e.target.value)}
-          className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
-        >
-          {STATES.map((s) => (
-            <option key={s.code} value={s.code}>{s.name}</option>
-          ))}
-        </select>
       </div>
 
       <fieldset className="mb-6">
@@ -169,6 +195,53 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
           ))}
         </div>
       </fieldset>
+
+      {state === "CO" && (
+        <div className="mb-6">
+          <label htmlFor="calculator-consecutive-overtime" className="block text-sm font-medium text-slate-700 mb-2">
+            Hours beyond 12 consecutive hours this week
+          </label>
+          <input
+            id="calculator-consecutive-overtime"
+            type="number"
+            value={consecutiveOvertimeHours}
+            onChange={(event) => {
+              setConsecutiveOvertimeHours(event.target.value);
+              setResult(null);
+              setError(null);
+            }}
+            min="0"
+            max="168"
+            step="0.5"
+            aria-invalid={consecutiveHoursAreInvalid}
+            aria-describedby="calculator-consecutive-help"
+            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+          />
+          <p id="calculator-consecutive-help" className="mt-2 text-xs text-slate-500">
+            Only include overtime caused by shifts that continued across workday boundaries.
+          </p>
+        </div>
+      )}
+
+      {state === "OR" && (
+        <div className="mb-6 rounded-lg border border-slate-200 bg-slate-50 p-4">
+          <label className="flex items-start gap-3 text-sm text-slate-700">
+            <input
+              type="checkbox"
+              checked={useOregonIndustryRule}
+              onChange={(event) => {
+                setUseOregonIndustryRule(event.target.checked);
+                setResult(null);
+                setError(null);
+              }}
+              className="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-900 focus:ring-blue-500"
+            />
+            <span>
+              Apply Oregon&apos;s manufacturing, cannery, drier, or packing-plant rule (overtime after 10 hours per day or 40 hours per week, whichever is greater).
+            </span>
+          </label>
+        </div>
+      )}
 
       {error && (
         <p id="calculator-error" role="alert" className="mb-4 text-sm font-semibold text-red-700">

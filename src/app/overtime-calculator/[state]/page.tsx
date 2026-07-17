@@ -174,8 +174,9 @@ export default function StatePage({ params }: { params: { state: string } }) {
                       double time after 12 hours.
                     </p>
                     <p className="mt-3">
-                      It does not currently include every seventh-day situation.
-                      It also does not calculate bonuses, commissions, union
+                      When all seven days contain hours, the calculator treats
+                      Monday through Sunday as one workweek and applies the
+                      seventh-day rule. It does not calculate bonuses, commissions, union
                       contract terms, exemptions, or special industry rules.
                     </p>
                   </div>
