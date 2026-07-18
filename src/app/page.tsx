@@ -143,7 +143,7 @@ export default function Home() {
               <div className="shrink-0"><FederalRuleIcon /></div>
               <div>
                 <h3 className="font-bold text-slate-900">Federal rule</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-700">
+                <p className="mt-2 text-base leading-relaxed text-slate-700">
                   Under the Fair Labor Standards Act (FLSA), hours over 40 in a workweek are generally paid at 1.5 times your regular rate.
                 </p>
               </div>
@@ -153,7 +153,7 @@ export default function Home() {
               <div className="shrink-0"><StateRulesIcon /></div>
               <div>
                 <h3 className="font-bold text-slate-900">State exceptions</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-700">
+                <p className="mt-2 text-base leading-relaxed text-slate-700">
                   Some states require daily overtime or use higher rates. California, Alaska, Colorado, and Nevada have additional requirements.
                 </p>
               </div>
@@ -163,7 +163,7 @@ export default function Home() {
               <div className="shrink-0"><ImportantIcon /></div>
               <div>
                 <h3 className="font-bold text-slate-900">Important</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-700">
+                <p className="mt-2 text-base leading-relaxed text-slate-700">
                   This calculator provides an estimate only. Always refer to your state&apos;s laws and your employer&apos;s policy.
                 </p>
               </div>
@@ -171,13 +171,13 @@ export default function Home() {
           </div>
 
           <details className="group mt-6 border-t border-slate-200 pt-5">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold text-blue-700 [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-bold text-blue-700 [&::-webkit-details-marker]:hidden">
               <span>View detailed overtime rules</span>
               <svg aria-hidden="true" className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
               </svg>
             </summary>
-            <div className="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+            <div className="mt-4 space-y-3 text-base leading-relaxed text-slate-600">
               <p><strong>Federal FLSA (all states):</strong> Hours worked over 40 in a workweek must be paid at 1.5x your regular rate.</p>
               <p><strong>California:</strong> Daily overtime applies — over 8 hours/day = 1.5x, over 12 hours/day = 2x.</p>
               <p><strong>Alaska:</strong> Daily overtime generally applies after 8 hours/day at 1.5x.</p>
