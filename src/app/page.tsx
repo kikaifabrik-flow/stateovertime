@@ -355,16 +355,19 @@ export default function Home() {
                 some states also require daily overtime.
               </span>
             </span>
-            <svg
-              aria-hidden="true"
-              className="h-5 w-5 shrink-0 text-blue-600 transition-transform group-open:rotate-180"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
-            </svg>
+            <span className="flex shrink-0 items-center gap-2 text-sm font-semibold text-blue-600">
+              <span>View details</span>
+              <svg
+                aria-hidden="true"
+                className="h-5 w-5 transition-transform group-open:rotate-180"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
+              </svg>
+            </span>
           </summary>
           <div className="prose prose-sm text-slate-600 space-y-2 mt-4">
             <p>
