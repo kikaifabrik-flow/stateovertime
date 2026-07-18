@@ -345,18 +345,29 @@ export default function Home() {
         )}
 
         <details className="group mt-8 bg-slate-50 rounded-xl p-6 md:p-8">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold text-slate-900 [&::-webkit-details-marker]:hidden">
-            <span>How overtime is calculated</span>
-            <svg
-              aria-hidden="true"
-              className="h-5 w-5 shrink-0 text-blue-600 transition-transform group-open:rotate-180"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
-            </svg>
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
+            <span className="min-w-0">
+              <span className="block text-lg font-semibold text-slate-900">
+                How overtime is calculated
+              </span>
+              <span className="mt-1 block text-sm font-normal leading-relaxed text-slate-600">
+                Federal overtime usually starts after 40 hours per week, while
+                some states also require daily overtime.
+              </span>
+            </span>
+            <span className="flex shrink-0 items-center gap-2 text-sm font-semibold text-blue-600">
+              <span>View details</span>
+              <svg
+                aria-hidden="true"
+                className="h-5 w-5 transition-transform group-open:rotate-180"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
+              </svg>
+            </span>
           </summary>
           <div className="prose prose-sm text-slate-600 space-y-2 mt-4">
             <p>
