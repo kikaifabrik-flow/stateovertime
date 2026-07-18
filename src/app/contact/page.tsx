@@ -53,13 +53,13 @@ export default function ContactPage() {
 
           <div>
             <h2 className="text-xl font-bold text-slate-900 mb-2">Email</h2>
-            <p className="text-slate-700 leading-relaxed">For general inquiries, feedback, or bug reports:</p>
-            <p className="mt-2"><a href="mailto:contact@stateovertime.com" className="text-blue-600 hover:underline font-semibold text-lg">contact@stateovertime.com</a></p>
+            <p className="text-[15px] leading-6 text-slate-700">For general inquiries, feedback, or bug reports:</p>
+            <p className="mt-2 text-[15px] leading-6"><a href="mailto:contact@stateovertime.com" className="font-semibold text-blue-600 hover:underline">contact@stateovertime.com</a></p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-slate-900 mb-2">Response Time</h2>
-            <p className="text-slate-700 leading-relaxed">We typically respond within 2-3 business days.</p>
+            <p className="text-[15px] leading-6 text-slate-700">We typically respond within 2-3 business days.</p>
           </div>
 
           <div className="mt-8 pt-4 border-t border-slate-200">
