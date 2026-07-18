@@ -344,13 +344,21 @@ export default function Home() {
           </div>
         )}
 
-        <ShareCalculator />
-
-        <div className="mt-8 bg-slate-50 rounded-xl p-6 md:p-8">
-          <h3 className="text-lg font-semibold text-slate-900 mb-3">
-            How overtime is calculated
-          </h3>
-          <div className="prose prose-sm text-slate-600 space-y-2">
+        <details className="group mt-8 bg-slate-50 rounded-xl p-6 md:p-8">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold text-slate-900 [&::-webkit-details-marker]:hidden">
+            <span>How overtime is calculated</span>
+            <svg
+              aria-hidden="true"
+              className="h-5 w-5 shrink-0 text-blue-600 transition-transform group-open:rotate-180"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
+            </svg>
+          </summary>
+          <div className="prose prose-sm text-slate-600 space-y-2 mt-4">
             <p>
               <strong>Federal FLSA (all states):</strong> Hours worked over 40
               in a workweek must be paid at 1.5x your regular rate.
@@ -378,7 +386,9 @@ export default function Home() {
               selected state page for limitations.
             </p>
           </div>
-        </div>
+        </details>
+
+        <ShareCalculator />
 
         <div className="mt-8 bg-white rounded-xl shadow-md p-6 md:p-8">
           <h2 className="text-xl font-semibold text-slate-900 mb-5">
