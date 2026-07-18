@@ -178,10 +178,17 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
           id="calculator-state"
           value={state}
           onChange={(e) => handleStateChange(e.target.value)}
-          className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+          className={`w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white ${
+            state ? "font-normal text-slate-900" : "font-semibold text-blue-700"
+          }`}
         >
+          {!state && (
+            <option value="" disabled className="font-semibold text-blue-700">
+              Select State
+            </option>
+          )}
           {STATES.map((s) => (
-            <option key={s.code} value={s.code}>{s.name}</option>
+            <option key={s.code} value={s.code} className="font-normal text-slate-900">{s.name}</option>
           ))}
         </select>
       </div>
@@ -197,7 +204,7 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
           step="0.01"
           aria-invalid={rateIsInvalid}
           aria-describedby={error ? "calculator-error" : undefined}
-          className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+          className="w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           placeholder="20.00"
         />
       </div>
@@ -218,7 +225,7 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
                 step="0.5"
                 aria-invalid={hoursAreInvalid && (hours[day.key as keyof typeof hours] < 0 || hours[day.key as keyof typeof hours] > 24)}
                 aria-describedby={error ? "calculator-error" : undefined}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
           ))}
@@ -244,7 +251,7 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
             step="0.5"
             aria-invalid={consecutiveHoursAreInvalid}
             aria-describedby="calculator-consecutive-help"
-            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            className="w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           />
           <p id="calculator-consecutive-help" className="mt-2 text-xs text-slate-500">
             Only include overtime caused by shifts that continued across workday boundaries.
@@ -253,7 +260,7 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
       )}
 
       {state === "OR" && (
-        <div className="mb-6 rounded-lg border border-slate-200 bg-slate-50 p-4">
+        <div className="mb-6 rounded-md border border-slate-200 bg-slate-50 p-4">
           <label className="flex items-start gap-3 text-sm text-slate-700">
             <input
               type="checkbox"
@@ -280,7 +287,8 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
 
       <button
         type="submit"
-        className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+        disabled={!state}
+        className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-md transition-colors disabled:cursor-not-allowed disabled:bg-slate-300"
       >
         Calculate Overtime Pay
       </button>
@@ -321,7 +329,7 @@ export default function Calculator({ defaultState = "CA" }: { defaultState?: str
                 <span className="font-semibold">{formatCurrency(result.doubleOtPay)}</span>
               </div>
             )}
-            <div className="flex justify-between py-4 mt-2 bg-blue-50 px-4 rounded-lg">
+            <div className="flex justify-between py-4 mt-2 bg-blue-50 px-4 rounded-md">
               <span className="text-blue-900 font-bold text-lg">Gross Pay:</span>
               <span className="text-blue-900 font-bold text-lg">{formatCurrency(result.grossPay)}</span>
             </div>

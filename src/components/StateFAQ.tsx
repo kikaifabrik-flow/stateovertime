@@ -24,7 +24,7 @@ export default function StateFAQ({ faqs, stateName }: { faqs: FAQ[]; stateName: 
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
+    <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
       <h2 className="text-2xl font-bold text-slate-900 mb-4">
         {stateName} Overtime FAQ
       </h2>
@@ -34,7 +34,7 @@ export default function StateFAQ({ faqs, stateName }: { faqs: FAQ[]; stateName: 
       />
       <div className="space-y-3">
         {faqs.map((faq, index) => (
-          <div key={faq.question} className="border border-slate-200 rounded-lg overflow-hidden">
+          <div key={faq.question} className="border border-slate-200 rounded-md overflow-hidden">
             <button
               type="button"
               id={`faq-question-${index}`}
