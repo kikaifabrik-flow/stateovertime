@@ -345,8 +345,16 @@ export default function Home() {
         )}
 
         <details className="group mt-8 bg-slate-50 rounded-xl p-6 md:p-8">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold text-slate-900 [&::-webkit-details-marker]:hidden">
-            <span>How overtime is calculated</span>
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
+            <span className="min-w-0">
+              <span className="block text-lg font-semibold text-slate-900">
+                How overtime is calculated
+              </span>
+              <span className="mt-1 block text-sm font-normal leading-relaxed text-slate-600">
+                Federal overtime usually starts after 40 hours per week, while
+                some states also require daily overtime.
+              </span>
+            </span>
             <svg
               aria-hidden="true"
               className="h-5 w-5 shrink-0 text-blue-600 transition-transform group-open:rotate-180"
