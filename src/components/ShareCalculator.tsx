@@ -38,7 +38,7 @@ export default function ShareCalculator() {
 
   return (
     <aside className="mt-5 rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-sm sm:px-6 sm:py-5" aria-label="Share calculator">
-      <p className="text-sm leading-relaxed text-slate-700">
+      <p className="text-base leading-relaxed text-slate-700">
         If you like this calculator, please share it with friends, coworkers, or anyone who may find it useful.
       </p>
 
