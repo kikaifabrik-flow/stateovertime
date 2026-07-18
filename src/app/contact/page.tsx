@@ -48,7 +48,7 @@ export default function ContactPage() {
         <div className="mt-6 bg-white rounded-lg shadow-md p-6 md:p-8 space-y-6">
           <div>
             <h2 className="text-xl font-bold text-slate-900 mb-2">Get in Touch</h2>
-            <p className="text-slate-700 leading-relaxed">Have a question about our overtime calculator? Found a bug? Want to suggest a new state-specific rule? We'd love to hear from you.</p>
+            <p className="text-[15px] leading-6 text-slate-700">Have a question about our overtime calculator? Found a bug? Want to suggest a new state-specific rule? We'd love to hear from you.</p>
           </div>
 
           <div>
