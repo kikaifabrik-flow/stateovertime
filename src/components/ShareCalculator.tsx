@@ -6,7 +6,7 @@ const SHARE_URL = "https://stateovertime.com/";
 const SHARE_TEXT = "Like this free overtime calculator? Share StateOvertime.com with someone who could use it.";
 
 const buttonClass =
-  "inline-flex h-11 w-11 items-center justify-center rounded-full border border-blue-200 bg-white text-blue-800 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2";
+  "inline-flex h-10 w-10 items-center justify-center rounded-full border border-blue-200 bg-white text-blue-800 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2";
 
 export default function ShareCalculator() {
   const [copyStatus, setCopyStatus] = useState("");
@@ -37,12 +37,12 @@ export default function ShareCalculator() {
   const encodedText = encodeURIComponent(SHARE_TEXT);
 
   return (
-    <aside className="mt-8 rounded-xl border border-blue-100 bg-blue-50 p-6 md:p-8" aria-label="Share calculator">
+    <aside className="mt-5 rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-sm sm:px-6 sm:py-5" aria-label="Share calculator">
       <p className="text-sm leading-relaxed text-slate-700">
         If you like this calculator, please share it with friends, coworkers, or anyone who may find it useful.
       </p>
 
-      <div className="mt-5 flex flex-wrap gap-3">
+      <div className="mt-4 flex flex-wrap gap-3">
         <a className={buttonClass} href={`https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on X" title="Share on X">
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.22-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.82l4.72 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z" /></svg>
         </a>
@@ -66,7 +66,11 @@ export default function ShareCalculator() {
         </button>
       </div>
 
-      <p className="mt-2 min-h-5 text-sm font-semibold text-blue-800" role="status" aria-live="polite">{copyStatus}</p>
+      {copyStatus && (
+        <p className="mt-2 text-sm font-semibold text-blue-800" role="status" aria-live="polite">
+          {copyStatus}
+        </p>
+      )}
     </aside>
   );
 }

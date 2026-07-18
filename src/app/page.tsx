@@ -1,9 +1,5 @@
-"use client";
-
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { calculateOvertimePay, type CalcResult } from "../lib/overtime";
+import Calculator from "../components/Calculator";
 import ShareCalculator from "../components/ShareCalculator";
 
 const STATES: { code: string; name: string }[] = [
@@ -60,353 +56,146 @@ const STATES: { code: string; name: string }[] = [
   { code: "WY", name: "Wyoming" },
 ];
 
-const DAYS: { key: string; label: string }[] = [
-  { key: "mon", label: "Monday" },
-  { key: "tue", label: "Tuesday" },
-  { key: "wed", label: "Wednesday" },
-  { key: "thu", label: "Thursday" },
-  { key: "fri", label: "Friday" },
-  { key: "sat", label: "Saturday" },
-  { key: "sun", label: "Sunday" },
-];
+const iconClass = "h-10 w-10 text-blue-700";
 
-interface DayHours {
-  mon: number;
-  tue: number;
-  wed: number;
-  thu: number;
-  fri: number;
-  sat: number;
-  sun: number;
+function FederalRuleIcon() {
+  return (
+    <svg aria-hidden="true" className={iconClass} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 18h36L24 7 6 18Z" />
+      <path d="M10 21v17M18 21v17M30 21v17M38 21v17M6 41h36" />
+    </svg>
+  );
+}
+
+function StateRulesIcon() {
+  return (
+    <svg aria-hidden="true" className={iconClass} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M24 7v34M17 10h14M11 16h26" />
+      <path d="m11 16-6 13h12L11 16ZM37 16l-6 13h12l-6-13Z" />
+      <path d="M6 29c0 4 10 4 10 0M32 29c0 4 10 4 10 0M17 41h14" />
+    </svg>
+  );
+}
+
+function ImportantIcon() {
+  return (
+    <svg aria-hidden="true" className={iconClass} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 5h17l8 8v30H12V5Z" />
+      <path d="M29 5v9h8M18 22h13M18 28h13M18 34h8" />
+    </svg>
+  );
 }
 
 export default function Home() {
-  const router = useRouter();
-  const [hourlyRate, setHourlyRate] = useState<string>("20");
-  const [state, setState] = useState<string>("");
-  const [hours, setHours] = useState<DayHours>({
-    mon: 8,
-    tue: 8,
-    wed: 8,
-    thu: 8,
-    fri: 8,
-    sat: 0,
-    sun: 0,
-  });
-
-  const [result, setResult] = useState<CalcResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const currentYear = new Date().getFullYear();
-  const rateIsInvalid =
-    hourlyRate !== "" &&
-    (!Number.isFinite(Number(hourlyRate)) || Number(hourlyRate) < 0);
-  const hoursAreInvalid = DAYS.some((day) => {
-    const value = hours[day.key as keyof DayHours];
-    return value < 0 || value > 24;
-  });
-
-  const handleHourChange = (day: string, value: string) => {
-    setHours((currentHours) => ({
-      ...currentHours,
-      [day]: parseFloat(value) || 0,
-    }));
-    setResult(null);
-    setError(null);
-  };
-
-  const handleRateChange = (value: string) => {
-    setHourlyRate(value);
-    setResult(null);
-    setError(null);
-  };
-
-  const handleStateChange = (stateCode: string) => {
-    const selectedState = STATES.find((stateItem) => stateItem.code === stateCode);
-
-    if (!selectedState) return;
-
-    setState(stateCode);
-    setResult(null);
-    setError(null);
-    const slug = selectedState.name.toLowerCase().replace(/\s+/g, "-");
-    sessionStorage.setItem(
-      "stateovertime-calculator-draft",
-      JSON.stringify({ hourlyRate, hours }),
-    );
-    router.push(`/overtime-calculator/${slug}`);
-  };
-
-  const calculate = () => {
-    if (!state) {
-      setResult(null);
-      return;
-    }
-
-    const rate = Number(hourlyRate);
-    const dayHoursArr = DAYS.map((d) => hours[d.key as keyof DayHours]);
-
-    if (hourlyRate.trim() === "" || !Number.isFinite(rate) || rate < 0) {
-      setResult(null);
-      setError("Enter an hourly rate of $0 or more.");
-      return;
-    }
-
-    if (dayHoursArr.some((dayHours) => dayHours < 0 || dayHours > 24)) {
-      setResult(null);
-      setError("Enter between 0 and 24 hours for each day.");
-      return;
-    }
-
-    setError(null);
-    setResult(
-      calculateOvertimePay({
-        stateCode: state,
-        hourlyRate: rate,
-        dayHours: dayHoursArr,
-      }),
-    );
-  };
-
-  const formatCurrency = (n: number) =>
-    n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <header className="bg-slate-900 text-white py-8 shadow-lg">
-        <div className="max-w-4xl mx-auto px-4">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            State Overtime Calculator
-          </h1>
-          <p className="text-slate-300 mt-2 text-sm md:text-base">
-           Free overtime calculator with state-specific rules for all 50 US
-            states plus Washington DC. Calculate your overtime pay based on
-            federal FLSA and state labor laws.
-          </p>
+    <div className="min-h-screen bg-[#f4f7fa] text-slate-950">
+      <header className="bg-[#071b35] text-white shadow-sm">
+        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
+          <div className="flex min-w-0 items-center gap-5">
+            <Link href="/" className="shrink-0 text-xl font-extrabold tracking-tight sm:text-2xl">
+              STATE OVERTIME
+            </Link>
+            <span className="hidden border-l border-white/20 pl-5 text-sm text-slate-200 lg:block">
+              Overtime pay calculator &amp; state laws
+            </span>
+          </div>
+
+          <nav aria-label="Main navigation" className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold sm:gap-x-8">
+            <a href="#calculator" className="border-b-2 border-blue-400 pb-2 text-white">
+              Calculator
+            </a>
+            <Link href="/state-laws" className="pb-2 text-slate-200 transition-colors hover:text-white">
+              State Laws
+            </Link>
+            <Link href="/about" className="pb-2 text-slate-200 transition-colors hover:text-white">
+              About
+            </Link>
+            <Link href="/contact" className="pb-2 text-slate-200 transition-colors hover:text-white">
+              Contact
+            </Link>
+          </nav>
         </div>
       </header>
 
-      <section className="max-w-4xl mx-auto px-4 py-8">
-        <form
-          className="bg-white rounded-xl shadow-md p-6 md:p-8"
-          onSubmit={(event) => {
-            event.preventDefault();
-            calculate();
-          }}
-          noValidate
-        >
-          <h2 className="text-xl font-semibold text-slate-900 mb-6">
-            Enter your work hours
+      <main className="mx-auto max-w-4xl px-4 py-8">
+        <section aria-labelledby="homepage-heading">
+          <h1 id="homepage-heading" className="text-2xl font-bold tracking-tight text-[#071b35] sm:text-3xl">
+            Calculate your overtime pay
+          </h1>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 sm:text-base">
+            Enter your hourly rate, select your state, and add the hours you worked each day.
+          </p>
+        </section>
+
+        <div id="calculator" className="mt-7 scroll-mt-6 bg-white rounded-lg shadow-md p-6 md:p-8">
+          <Calculator defaultState="" />
+        </div>
+
+        <section className="mt-5 rounded-lg border border-slate-200 bg-white p-5 shadow-sm sm:p-7" aria-labelledby="overtime-explanation-heading">
+          <h2 id="overtime-explanation-heading" className="text-xl font-bold text-[#071b35]">
+            How overtime is calculated
           </h2>
 
-          <div className="mb-6">
-            <label htmlFor="home-hourly-rate" className="block text-sm font-medium text-slate-700 mb-2">
-              Hourly Rate ($)
-            </label>
-            <input
-              id="home-hourly-rate"
-              type="number"
-              value={hourlyRate}
-              onChange={(e) => handleRateChange(e.target.value)}
-              min="0"
-              step="0.01"
-              aria-invalid={rateIsInvalid}
-              aria-describedby={error ? "home-calculator-error" : undefined}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              placeholder="20.00"
-            />
+          <div className="mt-6 grid gap-7 md:grid-cols-3 md:gap-9">
+            <article className="flex gap-4">
+              <div className="shrink-0"><FederalRuleIcon /></div>
+              <div>
+                <h3 className="font-bold text-slate-900">Federal rule</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-700">
+                  Under the Fair Labor Standards Act (FLSA), hours over 40 in a workweek are generally paid at 1.5 times your regular rate.
+                </p>
+              </div>
+            </article>
+
+            <article className="flex gap-4">
+              <div className="shrink-0"><StateRulesIcon /></div>
+              <div>
+                <h3 className="font-bold text-slate-900">State exceptions</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-700">
+                  Some states require daily overtime or use higher rates. California, Alaska, Colorado, and Nevada have additional requirements.
+                </p>
+              </div>
+            </article>
+
+            <article className="flex gap-4">
+              <div className="shrink-0"><ImportantIcon /></div>
+              <div>
+                <h3 className="font-bold text-slate-900">Important</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-700">
+                  This calculator provides an estimate only. Always refer to your state&apos;s laws and your employer&apos;s policy.
+                </p>
+              </div>
+            </article>
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="home-state" className="block text-sm font-semibold text-blue-600 mb-2">
-              Select State
-            </label>
-            <select
-              id="home-state"
-              value={state}
-              onChange={(e) => handleStateChange(e.target.value)}
-              className={`w-full px-4 py-2 border border-blue-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white ${
-                state ? "text-slate-900 font-normal" : "text-blue-500 font-semibold"
-              }`}
-            >
-              <option value="" disabled className="text-blue-500 font-semibold">
-                Select State
-              </option>
-              {STATES.map((s) => (
-                <option
-                  key={s.code}
-                  value={s.code}
-                  className="text-slate-900 font-normal"
-                >
-                  {s.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <fieldset className="mb-6">
-            <legend className="block text-sm font-medium text-slate-700 mb-2">
-              Hours worked per day
-            </legend>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {DAYS.map((day) => (
-                <div key={day.key}>
-                  <label htmlFor={`home-${day.key}`} className="block text-xs text-slate-500 mb-1">
-                    {day.label}
-                  </label>
-                  <input
-                    id={`home-${day.key}`}
-                    type="number"
-                    value={hours[day.key as keyof DayHours]}
-                    onChange={(e) => handleHourChange(day.key, e.target.value)}
-                    min="0"
-                    max="24"
-                    step="0.5"
-                    aria-invalid={hoursAreInvalid && (hours[day.key as keyof DayHours] < 0 || hours[day.key as keyof DayHours] > 24)}
-                    aria-describedby={error ? "home-calculator-error" : undefined}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                  />
-                </div>
-              ))}
-            </div>
-          </fieldset>
-
-          {error && (
-            <p id="home-calculator-error" role="alert" className="mb-4 text-sm font-semibold text-red-700">
-              {error}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={!state}
-            className="w-full bg-blue-900 hover:bg-blue-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-          >
-            Calculate Overtime Pay
-          </button>
-        </form>
-
-        {result && (
-          <div className="mt-6 bg-white rounded-xl shadow-md p-6 md:p-8" aria-live="polite">
-            <h2 className="text-xl font-semibold text-slate-900 mb-4">
-              Your Pay Breakdown
-            </h2>
-
-            <div className="space-y-3">
-              <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-600">Regular Hours:</span>
-                <span className="font-semibold">
-                  {result.regularHours.toFixed(1)} hrs
-                </span>
-              </div>
-              <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-600">Overtime Hours (1.5x):</span>
-                <span className="font-semibold">
-                  {result.otHours.toFixed(1)} hrs
-                </span>
-              </div>
-              {result.doubleOtHours > 0 && (
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-600">Double OT Hours (2x):</span>
-                  <span className="font-semibold">
-                    {result.doubleOtHours.toFixed(1)} hrs
-                  </span>
-                </div>
-              )}
-              <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-600">Regular Pay:</span>
-                <span className="font-semibold">
-                  {formatCurrency(result.regularPay)}
-                </span>
-              </div>
-              <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-600">Overtime Pay (1.5x):</span>
-                <span className="font-semibold">
-                  {formatCurrency(result.otPay)}
-                </span>
-              </div>
-              {result.doubleOtPay > 0 && (
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-600">Double OT Pay (2x):</span>
-                  <span className="font-semibold">
-                    {formatCurrency(result.doubleOtPay)}
-                  </span>
-                </div>
-              )}
-              <div className="flex justify-between py-4 mt-2 bg-blue-50 px-4 rounded-lg">
-                <span className="text-blue-900 font-bold text-lg">
-                  Gross Pay:
-                </span>
-                <span className="text-blue-900 font-bold text-lg">
-                  {formatCurrency(result.grossPay)}
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <details className="group mt-8 bg-slate-50 rounded-xl p-6 md:p-8">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
-            <span className="min-w-0">
-              <span className="block text-lg font-semibold text-slate-900">
-                How overtime is calculated
-              </span>
-              <span className="mt-1 block text-sm font-normal leading-relaxed text-slate-600">
-                Federal overtime usually starts after 40 hours per week, while
-                some states also require daily overtime.
-              </span>
-            </span>
-            <span className="flex shrink-0 items-center gap-2 text-sm font-semibold text-blue-600">
-              <span>View details</span>
-              <svg
-                aria-hidden="true"
-                className="h-5 w-5 transition-transform group-open:rotate-180"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
+          <details className="group mt-6 border-t border-slate-200 pt-5">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold text-blue-700 [&::-webkit-details-marker]:hidden">
+              <span>View detailed overtime rules</span>
+              <svg aria-hidden="true" className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
               </svg>
-            </span>
-          </summary>
-          <div className="prose prose-sm text-slate-600 space-y-2 mt-4">
-            <p>
-              <strong>Federal FLSA (all states):</strong> Hours worked over 40
-              in a workweek must be paid at 1.5x your regular rate.
-            </p>
-            <p>
-              <strong>California:</strong> Daily overtime applies — over 8
-              hours/day = 1.5x, over 12 hours/day = 2x.
-            </p>
-            <p>
-              <strong>Alaska:</strong> Daily overtime generally applies after
-              8 hours/day at 1.5x.
-            </p>
-            <p>
-              <strong>Colorado:</strong> Overtime generally applies after 12
-              hours/day or 12 consecutive hours at 1.5x.
-            </p>
-            <p>
-              <strong>Nevada:</strong> Daily overtime generally applies after
-              8 hours/day when the hourly rate is below $18; weekly overtime
-              still applies after 40 hours.
-            </p>
-            <p>
-              <strong>Other state rules:</strong> Some states have separate
-              seventh-day, industry, or prevailing-wage rules. Review the
-              selected state page for limitations.
-            </p>
-          </div>
-        </details>
+            </summary>
+            <div className="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+              <p><strong>Federal FLSA (all states):</strong> Hours worked over 40 in a workweek must be paid at 1.5x your regular rate.</p>
+              <p><strong>California:</strong> Daily overtime applies — over 8 hours/day = 1.5x, over 12 hours/day = 2x.</p>
+              <p><strong>Alaska:</strong> Daily overtime generally applies after 8 hours/day at 1.5x.</p>
+              <p><strong>Colorado:</strong> Overtime generally applies after 12 hours/day or 12 consecutive hours at 1.5x.</p>
+              <p><strong>Nevada:</strong> Daily overtime generally applies after 8 hours/day when the hourly rate is below $18; weekly overtime still applies after 40 hours.</p>
+              <p><strong>Other state rules:</strong> Some states have separate seventh-day, industry, or prevailing-wage rules. Review the selected state page for limitations.</p>
+            </div>
+          </details>
+        </section>
 
         <ShareCalculator />
 
-        <div className="mt-8 bg-white rounded-xl shadow-md p-6 md:p-8">
-          <h2 className="text-xl font-semibold text-slate-900 mb-5">
-            Browse Overtime Calculator by State
+        <section id="state-laws" className="mt-5 scroll-mt-6 rounded-lg border border-slate-200 bg-white p-5 shadow-sm sm:p-7" aria-labelledby="state-laws-heading">
+          <h2 id="state-laws-heading" className="text-xl font-bold text-[#071b35]">
+            Browse overtime laws and calculators by state
           </h2>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {STATES.map((stateItem) => {
               const slug = stateItem.name.toLowerCase().replace(/\s+/g, "-");
 
@@ -414,45 +203,28 @@ export default function Home() {
                 <Link
                   key={stateItem.code}
                   href={`/overtime-calculator/${slug}`}
-                  className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-900 transition-colors"
+                  className="rounded-md border border-slate-300 px-3 py-2.5 text-sm font-medium text-[#071b35] transition-colors hover:border-blue-500 hover:bg-blue-50 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   {stateItem.code === "DC" ? "DC" : stateItem.name}
                 </Link>
               );
             })}
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm mb-4">
-            <Link href="/about" className="text-slate-600 hover:text-blue-900">
-              About
-            </Link>
-            <Link
-              href="/privacy"
-              className="text-slate-600 hover:text-blue-900"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/disclaimer"
-              className="text-slate-600 hover:text-blue-900"
-            >
-              Disclaimer
-            </Link>
-            <Link href="/contact" className="text-slate-600 hover:text-blue-900">
-              Contact
-            </Link>
+      <footer className="border-t border-slate-300 bg-[#f4f7fa]">
+        <div className="mx-auto max-w-4xl px-4 py-8 text-center sm:px-6 lg:px-8">
+          <nav aria-label="Footer navigation" className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
+            <Link href="/privacy" className="text-[#071b35] hover:text-blue-700">Privacy Policy</Link>
+            <Link href="/disclaimer" className="text-[#071b35] hover:text-blue-700">Disclaimer</Link>
+            <Link href="/contact" className="text-[#071b35] hover:text-blue-700">Contact</Link>
           </nav>
-
-          <p className="text-sm text-slate-500">
+          <p className="mt-6 text-sm text-slate-500">
             © {currentYear} StateOvertime.com — Free overtime calculator for US workers.
           </p>
-          <p className="text-xs text-slate-400 mt-2">
-            This tool provides estimates only. Consult your HR department or
-            state labor board for official calculations.
+          <p className="mt-2 text-xs text-slate-400">
+            This tool provides estimates only. Consult your HR department or state labor board for official calculations.
           </p>
         </div>
       </footer>

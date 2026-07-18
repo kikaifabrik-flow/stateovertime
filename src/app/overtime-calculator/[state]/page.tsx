@@ -66,13 +66,13 @@ export default function StatePage({ params }: { params: { state: string } }) {
 
       <main>
         <section className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-          <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
+          <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
             <Calculator defaultState={state.code} />
           </div>
 
           <ShareCalculator />
 
-          <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
+          <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
             {state.code === "CA" ? (
               <>
                 <span className="inline-block bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full mb-3">
@@ -112,7 +112,7 @@ export default function StatePage({ params }: { params: { state: string } }) {
                     <h3 className="text-xl font-semibold text-slate-900 mb-2">
                       California Overtime Example
                     </h3>
-                    <div className="bg-blue-50 border-l-4 border-blue-700 rounded-lg p-5 space-y-2">
+                    <div className="bg-blue-50 border-l-4 border-blue-700 rounded-md p-5 space-y-2">
                       <p className="font-semibold text-blue-900">
                         An employee earns $20 per hour and works 10 hours in one
                         day.
@@ -196,7 +196,7 @@ export default function StatePage({ params }: { params: { state: string } }) {
               </>
             )}
 
-            <div className="bg-slate-50 rounded-lg p-4 mt-6">
+            <div className="bg-slate-50 rounded-md p-4 mt-6">
               <p className="text-sm text-slate-600">
                 <strong>Legal Reference:</strong> {state.lawReference}
               </p>
@@ -209,13 +209,13 @@ export default function StatePage({ params }: { params: { state: string } }) {
             )}
           </div>
 
-          <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
+          <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
             <h2 className="text-2xl font-bold text-slate-900 mb-4">
               {state.name} Overtime Rules Summary
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-blue-50 rounded-lg p-4">
+              <div className="bg-blue-50 rounded-md p-4">
                 <h3 className="font-semibold text-blue-900 mb-2">
                   Weekly Overtime
                 </h3>
@@ -225,7 +225,7 @@ export default function StatePage({ params }: { params: { state: string } }) {
               </div>
 
               <div
-                className={`rounded-lg p-4 ${
+                className={`rounded-md p-4 ${
                   rule.dailyOvertimeThreshold !== undefined ? "bg-green-50" : "bg-slate-50"
                 }`}
               >
@@ -238,7 +238,7 @@ export default function StatePage({ params }: { params: { state: string } }) {
               </div>
 
               <div
-                className={`rounded-lg p-4 ${
+                className={`rounded-md p-4 ${
                   rule.doubleOvertimeThreshold !== undefined ? "bg-purple-50" : "bg-slate-50"
                 }`}
               >
@@ -250,7 +250,7 @@ export default function StatePage({ params }: { params: { state: string } }) {
                 </p>
               </div>
 
-              <div className="bg-slate-50 rounded-lg p-4">
+              <div className="bg-slate-50 rounded-md p-4">
                 <h3 className="font-semibold text-slate-900 mb-2">
                   Overtime Rate
                 </h3>
@@ -263,7 +263,7 @@ export default function StatePage({ params }: { params: { state: string } }) {
 
           <StateFAQ faqs={state.faqs} stateName={state.name} />
 
-          <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
+          <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
             <h2 className="text-2xl font-bold text-slate-900 mb-4">
               Other State Overtime Calculators
             </h2>
@@ -273,7 +273,7 @@ export default function StatePage({ params }: { params: { state: string } }) {
                 <Link
                   key={s.code}
                   href={`/overtime-calculator/${s.slug}`}
-                  className="block bg-slate-50 hover:bg-slate-100 rounded-lg p-3 text-center transition-colors"
+                  className="block bg-slate-50 hover:bg-slate-100 rounded-md p-3 text-center transition-colors"
                 >
                   <span className="text-blue-600 font-medium">{s.name}</span>
                 </Link>
@@ -284,7 +284,7 @@ export default function StatePage({ params }: { params: { state: string } }) {
           <div className="text-center pt-4">
             <Link
               href="/"
-              className="inline-flex items-center rounded-lg border border-blue-200 bg-white px-5 py-3 text-blue-700 shadow-sm hover:border-blue-300 hover:bg-blue-50 hover:text-blue-900 font-semibold transition-colors"
+              className="inline-flex items-center rounded-md border border-blue-200 bg-white px-5 py-3 text-blue-700 shadow-sm hover:border-blue-300 hover:bg-blue-50 hover:text-blue-900 font-semibold transition-colors"
             >
               &larr; Return to the main calculator
             </Link>
