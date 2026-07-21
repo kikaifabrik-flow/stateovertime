@@ -77,6 +77,21 @@ export default function StateLawsPage() {
             ))}
           </div>
         </section>
+
+        <section className="mt-5 rounded-lg border border-blue-200 bg-blue-50 p-5 shadow-sm sm:p-6" aria-labelledby="california-guide-heading">
+          <h2 id="california-guide-heading" className="text-xl font-bold text-[#071b35]">
+            California overtime guide
+          </h2>
+          <p className="mt-2 max-w-3xl text-base leading-7 text-slate-700">
+            California uses daily overtime, weekly overtime and double-time rules. Read the guide for a plain-language explanation, worked examples and links to official state sources.
+          </p>
+          <Link
+            href="/california-overtime-laws"
+            className="mt-4 inline-flex items-center rounded-md border border-blue-300 bg-white px-4 py-2.5 font-semibold text-blue-700 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-100 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Read California overtime laws
+          </Link>
+        </section>
       </main>
 
       <footer className="border-t border-slate-300 bg-[#f4f7fa]">
