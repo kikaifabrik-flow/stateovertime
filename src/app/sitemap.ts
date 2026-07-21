@@ -21,6 +21,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/california-overtime-laws`,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/privacy`,
       changeFrequency: "monthly",
       priority: 0.3,
