@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ShareCalculator from "../../components/ShareCalculator";
+import { SiteHeader } from "../../components/SiteHeader";
 
 const calculatorPath = "/overtime-calculator/california";
 
@@ -7,17 +9,17 @@ const faqs = [
   {
     question: "Does California overtime start after eight hours?",
     answer:
-      "For most nonexempt employees, time-and-a-half generally begins after eight hours worked in one workday. Weekly overtime may also apply after 40 hours worked in a workweek.",
+      "For most nonexempt employees, time-and-a-half begins after eight hours worked in one workday. Weekly overtime may also apply after 40 hours worked in a workweek.",
   },
   {
     question: "When does double time begin in California?",
     answer:
-      "Double time generally applies after 12 hours worked in one workday. It may also apply after eight hours worked on the seventh consecutive day of work within a workweek.",
+      "A nonexempt employee may earn double time after 12 hours worked in one workday. Double time may also apply after eight hours worked on the seventh consecutive day of work within a workweek.",
   },
   {
     question: "Do I receive overtime just for working on Sunday?",
     answer:
-      "Not automatically. California does not generally require overtime simply because work takes place on a Saturday, Sunday or holiday. Overtime depends on hours worked, consecutive days and any applicable employment agreement or employer policy.",
+      "Not automatically. California overtime rules do not apply solely because work takes place on a Saturday, Sunday or holiday. Overtime depends on hours worked, consecutive days and any applicable employment agreement or employer policy.",
   },
   {
     question: "Can a salaried employee receive overtime?",
@@ -27,26 +29,26 @@ const faqs = [
   {
     question: "Is overtime based on hours worked or hours paid?",
     answer:
-      "Overtime is generally based on hours actually worked. Paid vacation, sick leave or holiday time usually does not count as hours worked when determining whether the employee crossed an overtime threshold.",
+      "California calculates overtime from hours actually worked. Paid vacation, sick leave and holiday time are not treated as hours worked when deciding whether the employee crossed an overtime threshold.",
   },
   {
     question: "Can my employer refuse to pay overtime that was not approved?",
     answer:
-      "An employer may enforce a policy requiring approval before overtime is worked. However, overtime generally must still be paid when the employer knew or should have known that the work was performed.",
+      "An employer may enforce a policy requiring approval before overtime is worked. However, overtime still must be paid when the employer knew or should have known that the work was performed.",
   },
 ];
 
 const officialSources = [
   {
-    label: "California Labor Commissioner — Overtime FAQ",
+    label: "California Labor Commissioner - Overtime FAQ",
     href: "https://www.dir.ca.gov/dlse/faq_overtime.htm",
   },
   {
-    label: "California Labor Commissioner — Overtime exemptions",
+    label: "California Labor Commissioner - Overtime exemptions",
     href: "https://www.dir.ca.gov/dlse/faq_overtimeexemptions.htm",
   },
   {
-    label: "California Labor Commissioner — Exceptions to the general overtime law",
+    label: "California Labor Commissioner - Exceptions to the general overtime law",
     href: "https://www.dir.ca.gov/dlse/FAQ_OvertimeExceptions.htm",
   },
   {
@@ -54,7 +56,7 @@ const officialSources = [
     href: "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=510.",
   },
   {
-    label: "California Labor Code Section 500 — Workday and workweek definitions",
+    label: "California Labor Code Section 500 - Workday and workweek definitions",
     href: "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=500.",
   },
 ];
@@ -120,35 +122,19 @@ export default function CaliforniaOvertimeLawsPage() {
 
   return (
     <div className="min-h-screen bg-[#f4f7fa] text-slate-950">
-      <header className="bg-[#071b35] text-white shadow-sm">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
-          <div className="flex min-w-0 items-center gap-5">
-            <Link href="/" className="shrink-0 text-xl font-extrabold tracking-tight sm:text-2xl">
-              STATE OVERTIME
-            </Link>
-            <span className="hidden border-l border-white/20 pl-5 text-sm text-slate-200 lg:block">
-              Overtime pay calculator &amp; state laws
-            </span>
-          </div>
-
-          <nav aria-label="Main navigation" className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold sm:gap-x-8">
-            <Link href="/#calculator" className="pb-2 text-slate-200 transition-colors hover:text-white">
-              Calculator
-            </Link>
-            <Link href="/state-laws" className="border-b-2 border-blue-400 pb-2 text-white">
-              State Laws
-            </Link>
-            <Link href="/about" className="pb-2 text-slate-200 transition-colors hover:text-white">
-              About
-            </Link>
-            <Link href="/contact" className="pb-2 text-slate-200 transition-colors hover:text-white">
-              Contact
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader activePage="california-overtime-laws" />
 
       <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+        <Link
+          href="/"
+          className="mb-4 inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-blue-700 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+          Back to calculator
+        </Link>
+
         <nav aria-label="Breadcrumb" className="mb-5 text-sm text-slate-600">
           <Link href="/state-laws" className="font-semibold text-blue-700 hover:text-blue-900">
             State overtime laws
@@ -166,11 +152,7 @@ export default function CaliforniaOvertimeLawsPage() {
               California overtime can work differently from overtime in many other states. For most nonexempt employees, overtime may be based on the number of hours worked in one day as well as the total hours worked during the week.
             </p>
             <p>
-              This guide explains the general rules and shows how time-and-a-half and double time may apply. When you are ready to estimate your pay, use the {" "}
-              <Link href={calculatorPath} className="font-semibold text-blue-700 underline decoration-blue-300 underline-offset-2 hover:text-blue-900">
-                California overtime calculator
-              </Link>
-              .
+              This guide explains the rules and shows how time-and-a-half and double time may apply. When you are ready to estimate your pay, use the California overtime calculator.
             </p>
           </div>
           <Link
@@ -184,7 +166,7 @@ export default function CaliforniaOvertimeLawsPage() {
         <article className="mt-8 space-y-6">
           <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm sm:p-7" aria-labelledby="general-rules-heading">
             <h2 id="general-rules-heading" className="text-2xl font-bold text-[#071b35]">
-              How California overtime generally works
+              How California overtime works
             </h2>
             <div className="mt-4 space-y-4 text-base leading-7 text-slate-700">
               <p>
@@ -221,11 +203,11 @@ export default function CaliforniaOvertimeLawsPage() {
             </h2>
             <div className="mt-4 space-y-4 text-base leading-7 text-slate-700">
               <p>
-                California generally requires time-and-a-half pay when a nonexempt employee works more than eight hours in one workday.
+                A nonexempt employee who works more than eight hours in one workday earns time-and-a-half for the extra hours.
               </p>
               <p>For example, suppose an employee earns $20 per hour and works 10 hours on Monday.</p>
               <p>
-                The first eight hours are paid at the regular $20 hourly rate. The remaining two hours are generally paid at $30 per hour, which is one and one-half times the regular rate.
+                The first eight hours are paid at the regular $20 hourly rate. The remaining two hours would be paid at $30 per hour, which is one and one-half times the regular rate.
               </p>
             </div>
             <ExampleBox labelledBy="ten-hour-example-heading">
@@ -245,7 +227,7 @@ export default function CaliforniaOvertimeLawsPage() {
               Double time after 12 hours
             </h2>
             <div className="mt-4 space-y-4 text-base leading-7 text-slate-700">
-              <p>Double time generally begins after an employee works more than 12 hours in one workday.</p>
+              <p>For most nonexempt employees, double time begins after more than 12 hours of work in one workday.</p>
               <p>An employee earning $20 per hour would have a double-time rate of $40 per hour.</p>
             </div>
             <ExampleBox labelledBy="fourteen-hour-example-heading">
@@ -263,7 +245,7 @@ export default function CaliforniaOvertimeLawsPage() {
               Overtime after 40 hours in a workweek
             </h2>
             <div className="mt-4 space-y-4 text-base leading-7 text-slate-700">
-              <p>California also generally requires time-and-a-half pay for hours worked beyond 40 in a workweek.</p>
+              <p>California&apos;s weekly rule also provides time-and-a-half pay for hours worked beyond 40 in a workweek.</p>
               <p>
                 Daily and weekly overtime rules are considered together. The same hours are not simply paid twice because they qualify under both a daily and weekly rule.
               </p>
@@ -287,9 +269,15 @@ export default function CaliforniaOvertimeLawsPage() {
             <div className="mt-4 space-y-4 text-base leading-7 text-slate-700">
               <p>California has an additional rule for the seventh consecutive day worked within an employer’s workweek.</p>
               <p>For most nonexempt employees:</p>
-              <ul className="list-disc space-y-2 pl-6 marker:text-blue-700">
-                <li>The first eight hours worked on the seventh consecutive day are generally paid at time-and-a-half.</li>
-                <li>Hours worked beyond eight on that seventh day are generally paid at double time.</li>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <span aria-hidden="true" className="font-semibold text-blue-700">-</span>
+                  <span>The first eight hours worked on the seventh consecutive day receive time-and-a-half pay.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span aria-hidden="true" className="font-semibold text-blue-700">-</span>
+                  <span>Hours worked beyond eight on that seventh day receive double-time pay.</span>
+                </li>
               </ul>
               <p>
                 The rule concerns the seventh consecutive day within the same workweek, not simply any seven calendar days chosen by the employee.
@@ -326,7 +314,7 @@ export default function CaliforniaOvertimeLawsPage() {
               What counts as a workday?
             </h2>
             <div className="mt-4 space-y-4 text-base leading-7 text-slate-700">
-              <p>A workday is generally a fixed 24-hour period established by the employer. It does not always begin at midnight.</p>
+              <p>A workday is a fixed 24-hour period established by the employer that begins at the same time each calendar day. It does not always begin at midnight.</p>
               <p>
                 This matters for employees who work overnight. A shift that crosses midnight is not automatically split into two separate workdays for overtime purposes. The employer’s established workday determines where the hours fall.
               </p>
@@ -342,10 +330,10 @@ export default function CaliforniaOvertimeLawsPage() {
             </h2>
             <div className="mt-4 space-y-4 text-base leading-7 text-slate-700">
               <p>
-                An employer may have a rule requiring approval before an employee works overtime. However, California generally requires payment for overtime the employer knew about or should have known was being worked.
+                An employer may have a rule requiring approval before an employee works overtime. Even so, the employer must pay for overtime it knew about or should have known was being worked.
               </p>
               <p>
-                The employer may address a violation of its scheduling or approval policy separately, but it generally cannot accept the work and then refuse to pay for the time.
+                The employer may address a violation of its scheduling or approval policy separately, but it cannot accept the work and then refuse to pay for the time.
               </p>
             </div>
           </section>
@@ -359,13 +347,31 @@ export default function CaliforniaOvertimeLawsPage() {
                 California overtime rules contain exemptions and special rules. The standard calculation may not apply in the usual way to every worker.
               </p>
               <p>Examples can include:</p>
-              <ul className="list-disc space-y-2 pl-6 marker:text-blue-700">
-                <li>Employees who legally qualify as executive, administrative or professional employees</li>
-                <li>Certain workers covered by a valid alternative workweek schedule</li>
-                <li>Some commissioned employees</li>
-                <li>Certain drivers and transportation workers</li>
-                <li>Employees covered by qualifying collective bargaining agreements</li>
-                <li>Workers in industries with special wage-order rules</li>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <span aria-hidden="true" className="font-semibold text-blue-700">-</span>
+                  <span>Employees who legally qualify as executive, administrative or professional employees</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span aria-hidden="true" className="font-semibold text-blue-700">-</span>
+                  <span>Certain workers covered by a valid alternative workweek schedule</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span aria-hidden="true" className="font-semibold text-blue-700">-</span>
+                  <span>Some commissioned employees</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span aria-hidden="true" className="font-semibold text-blue-700">-</span>
+                  <span>Certain drivers and transportation workers</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span aria-hidden="true" className="font-semibold text-blue-700">-</span>
+                  <span>Employees covered by qualifying collective bargaining agreements</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span aria-hidden="true" className="font-semibold text-blue-700">-</span>
+                  <span>Workers in industries with special wage-order rules</span>
+                </li>
               </ul>
               <p>
                 Review the Labor Commissioner’s official pages covering {" "}
@@ -455,6 +461,8 @@ export default function CaliforniaOvertimeLawsPage() {
             </p>
           </aside>
         </article>
+
+        <ShareCalculator />
       </main>
 
       <footer className="border-t border-slate-300 bg-[#f4f7fa]">
@@ -465,7 +473,7 @@ export default function CaliforniaOvertimeLawsPage() {
             <Link href="/contact" className="text-[#071b35] hover:text-blue-700">Contact</Link>
           </nav>
           <p className="mt-6 text-sm text-slate-500">
-            © {currentYear} StateOvertime.com — Free overtime calculator for US workers.
+            © {currentYear} StateOvertime.com - Free overtime calculator for US workers.
           </p>
           <p className="mt-2 text-xs text-slate-400">
             This tool provides estimates only. Consult your HR department or state labor board for official calculations.

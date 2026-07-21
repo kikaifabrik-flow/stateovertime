@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SiteHeader } from "../../components/SiteHeader";
 import { STATES_DATA } from "../../data/states";
 
 export const metadata: Metadata = {
@@ -16,33 +17,7 @@ export default function StateLawsPage() {
 
   return (
     <div className="min-h-screen bg-[#f4f7fa] text-slate-950">
-      <header className="bg-[#071b35] text-white shadow-sm">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
-          <div className="flex min-w-0 items-center gap-5">
-            <Link href="/" className="shrink-0 text-xl font-extrabold tracking-tight sm:text-2xl">
-              STATE OVERTIME
-            </Link>
-            <span className="hidden border-l border-white/20 pl-5 text-sm text-slate-200 lg:block">
-              Overtime pay calculator &amp; state laws
-            </span>
-          </div>
-
-          <nav aria-label="Main navigation" className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold sm:gap-x-8">
-            <Link href="/#calculator" className="pb-2 text-slate-200 transition-colors hover:text-white">
-              Calculator
-            </Link>
-            <Link href="/state-laws" aria-current="page" className="border-b-2 border-blue-400 pb-2 text-white">
-              State Laws
-            </Link>
-            <Link href="/about" className="pb-2 text-slate-200 transition-colors hover:text-white">
-              About
-            </Link>
-            <Link href="/contact" className="pb-2 text-slate-200 transition-colors hover:text-white">
-              Contact
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader activePage="state-laws" />
 
       <main className="mx-auto max-w-4xl px-4 py-8">
         <Link
