@@ -23,7 +23,7 @@ export function SiteHeader({ activePage, activeStateSlug }: SiteHeaderProps) {
             STATE OVERTIME
           </Link>
           <span className="hidden border-l border-white/20 pl-5 text-sm text-slate-200 lg:block">
-            Overtime pay calculator &amp; state laws
+            Free Overtime pay calculator &amp; state laws
           </span>
         </div>
 
