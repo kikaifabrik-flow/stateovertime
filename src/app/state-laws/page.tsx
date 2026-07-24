@@ -44,7 +44,7 @@ export default function StateLawsPage() {
             {STATES_DATA.map((state) => (
               <Link
                 key={state.code}
-                href={`/overtime-calculator/${state.slug}`}
+                href={state.code === "DC" ? `/overtime-calculator/${state.slug}` : `/${state.slug}-overtime-laws`}
                 className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-[#071b35] transition-colors hover:border-blue-500 hover:bg-blue-50 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 {state.code === "DC" ? "DC" : state.name}

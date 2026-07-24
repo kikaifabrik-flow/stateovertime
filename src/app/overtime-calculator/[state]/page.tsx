@@ -70,22 +70,22 @@ export default function StatePage({ params }: { params: { state: string } }) {
             <Calculator defaultState={state.code} />
           </div>
 
-          {state.code === "CA" && (
-            <aside className="rounded-lg border border-blue-200 bg-blue-50 p-5 shadow-sm sm:p-6" aria-labelledby="california-guide-heading">
-              <h2 id="california-guide-heading" className="text-xl font-bold text-[#071b35]">
-                Not sure which overtime rate applies?
-              </h2>
-              <p className="mt-2 text-base leading-7 text-slate-700">
-                California has daily overtime, weekly overtime and double-time rules. Read the California overtime guide for a plain-language explanation and examples.
-              </p>
-              <Link
-                href="/california-overtime-laws"
-                className="mt-4 inline-flex items-center rounded-md border border-blue-300 bg-white px-4 py-2.5 font-semibold text-blue-700 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-100 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              >
-                Read the California Overtime Laws Guide
-              </Link>
-            </aside>
-          )}
+          <aside className="rounded-lg border border-blue-200 bg-blue-50 p-5 shadow-sm sm:p-6" aria-labelledby="state-guide-heading">
+            <h2 id="state-guide-heading" className="text-xl font-bold text-[#071b35]">
+              Not sure which overtime rate applies?
+            </h2>
+            <p className="mt-2 text-base leading-7 text-slate-700">
+              {state.code === "CA"
+                ? "California has daily overtime, weekly overtime and double-time rules. Read the California overtime guide for a plain-language explanation and examples."
+                : `${rule.metadataSummary} Read the ${state.name} overtime guide for a plain-language explanation, examples and official sources.`}
+            </p>
+            <Link
+              href={`/${state.slug}-overtime-laws`}
+              className="mt-4 inline-flex items-center rounded-md border border-blue-300 bg-white px-4 py-2.5 font-semibold text-blue-700 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-100 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Read the {state.name} Overtime Laws Guide
+            </Link>
+          </aside>
 
           <ShareCalculator />
 

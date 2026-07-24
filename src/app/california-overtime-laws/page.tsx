@@ -462,7 +462,11 @@ export default function CaliforniaOvertimeLawsPage() {
           </aside>
         </article>
 
-        <ShareCalculator />
+        <ShareCalculator
+          shareUrl="https://stateovertime.com/california-overtime-laws"
+          shareTitle="California Overtime Laws"
+          shareText="Plain-English guide to California overtime laws, daily overtime, double time and official sources."
+        />
       </main>
 
       <footer className="border-t border-slate-300 bg-[#f4f7fa]">

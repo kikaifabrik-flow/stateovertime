@@ -2,18 +2,26 @@
 
 import { useState } from "react";
 
-const SHARE_URL = "https://stateovertime.com/";
-const SHARE_TEXT = "Like this free overtime calculator? Share StateOvertime.com with someone who could use it.";
+const DEFAULT_SHARE_URL = "https://stateovertime.com/";
+const DEFAULT_SHARE_TEXT = "Like this free overtime calculator? Share StateOvertime.com with someone who could use it.";
 
 const buttonClass =
   "inline-flex h-10 w-10 items-center justify-center rounded-full border border-blue-200 bg-white text-blue-800 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2";
 
-export default function ShareCalculator() {
+export default function ShareCalculator({
+  shareUrl = DEFAULT_SHARE_URL,
+  shareText = DEFAULT_SHARE_TEXT,
+  shareTitle = "State Overtime Calculator",
+}: {
+  shareUrl?: string;
+  shareText?: string;
+  shareTitle?: string;
+}) {
   const [copyStatus, setCopyStatus] = useState("");
 
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText(SHARE_URL);
+      await navigator.clipboard.writeText(shareUrl);
       setCopyStatus("Link copied!");
     } catch {
       setCopyStatus("Copy failed. Please copy stateovertime.com manually.");
@@ -23,7 +31,7 @@ export default function ShareCalculator() {
   const shareMore = async () => {
     if (navigator.share) {
       try {
-        await navigator.share({ title: "State Overtime Calculator", text: SHARE_TEXT, url: SHARE_URL });
+        await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
         return;
       } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError") return;
@@ -33,8 +41,8 @@ export default function ShareCalculator() {
     await copyLink();
   };
 
-  const encodedUrl = encodeURIComponent(SHARE_URL);
-  const encodedText = encodeURIComponent(SHARE_TEXT);
+  const encodedUrl = encodeURIComponent(shareUrl);
+  const encodedText = encodeURIComponent(shareText);
 
   return (
     <aside className="mt-5 rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-sm sm:px-6 sm:py-5" aria-label="Share calculator">
@@ -52,13 +60,13 @@ export default function ShareCalculator() {
         <a className={buttonClass} href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn" title="Share on LinkedIn">
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true"><path d="M5.34 3.5a1.84 1.84 0 1 1 0 3.68 1.84 1.84 0 0 1 0-3.68ZM3.75 8.5h3.18V20H3.75V8.5Zm5.35 0h3.05v1.57h.04c.43-.8 1.46-1.94 3.01-1.94 3.22 0 3.82 2.12 3.82 4.88V20h-3.18v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.61-2.38 3.27V20H9.1V8.5Z" /></svg>
         </a>
-        <a className={buttonClass} href={`https://wa.me/?text=${encodeURIComponent(`${SHARE_TEXT} ${SHARE_URL}`)}`} target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp" title="Share on WhatsApp">
+        <a className={buttonClass} href={`https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`} target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp" title="Share on WhatsApp">
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7l-4.2 1.3 1.4-4A8 8 0 1 1 20 11.5Z" /><path d="M8.5 8.5c.8 3 2 4.2 5 5" /><path d="m8.4 8.3 1-1.1M13.7 13.6l1.1-1" /></svg>
         </a>
-        <a className={buttonClass} href={`mailto:?subject=${encodeURIComponent("Free State Overtime Calculator")}&body=${encodeURIComponent(`${SHARE_TEXT}\n\n${SHARE_URL}`)}`} aria-label="Share by email" title="Share by email">
+        <a className={buttonClass} href={`mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(`${shareText}\n\n${shareUrl}`)}`} aria-label="Share by email" title="Share by email">
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
         </a>
-        <button type="button" className={buttonClass} onClick={copyLink} aria-label="Copy homepage link" title="Copy link">
+        <button type="button" className={buttonClass} onClick={copyLink} aria-label="Copy page link" title="Copy link">
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1" /><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1" /></svg>
         </button>
         <button type="button" className={buttonClass} onClick={shareMore} aria-label="Open more sharing options" title="More sharing options">
