@@ -1,14 +1,19 @@
 import Link from "next/link";
+import { STATES_DATA } from "../data/states";
 
 type SiteHeaderProps = {
-  activePage?: "calculator" | "state-laws" | "california-overtime-laws" | "about" | "contact";
+  activePage?: "calculator" | "state-laws" | "california-overtime-laws" | "state-overtime-laws" | "about" | "contact";
+  activeStateSlug?: string;
 };
 
 const defaultLinkClass = "pb-2 text-slate-200 transition-colors hover:text-white";
 const activeLinkClass = "border-b-2 border-blue-400 pb-2 text-white";
 
-export function SiteHeader({ activePage }: SiteHeaderProps) {
-  const lawsMenuIsActive = activePage === "state-laws" || activePage === "california-overtime-laws";
+const LAW_STATES = STATES_DATA.filter((state) => state.code !== "DC");
+
+export function SiteHeader({ activePage, activeStateSlug }: SiteHeaderProps) {
+  const lawsMenuIsActive = activePage === "state-laws" || activePage === "california-overtime-laws" || activePage === "state-overtime-laws";
+  const selectedStateSlug = activePage === "california-overtime-laws" ? "california" : activeStateSlug;
 
   return (
     <header className="bg-[#071b35] text-white shadow-sm">
@@ -53,7 +58,7 @@ export function SiteHeader({ activePage }: SiteHeaderProps) {
                 />
               </svg>
             </summary>
-            <div className="absolute left-0 z-20 mt-2 w-60 overflow-hidden rounded-md border border-slate-200 bg-white py-1 text-sm font-semibold text-[#071b35] shadow-lg">
+            <div className="absolute left-1/2 z-20 mt-2 max-h-[70vh] w-64 -translate-x-1/2 overflow-y-auto rounded-md border border-slate-200 bg-white py-1 text-sm font-semibold text-[#071b35] shadow-lg sm:left-0 sm:translate-x-0">
               <Link
                 href="/state-laws"
                 aria-current={activePage === "state-laws" ? "page" : undefined}
@@ -63,15 +68,23 @@ export function SiteHeader({ activePage }: SiteHeaderProps) {
               >
                 All State Laws
               </Link>
-              <Link
-                href="/california-overtime-laws"
-                aria-current={activePage === "california-overtime-laws" ? "page" : undefined}
-                className={`block border-t border-slate-100 px-4 py-3 transition-colors hover:bg-blue-50 hover:text-blue-800 focus:bg-blue-50 focus:text-blue-800 focus:outline-none ${
-                  activePage === "california-overtime-laws" ? "bg-blue-50 text-blue-800" : ""
-                }`}
-              >
-                California Overtime Laws
-              </Link>
+              <div className="border-t border-slate-100 py-1">
+                {LAW_STATES.map((state) => {
+                  const isActive = selectedStateSlug === state.slug;
+                  return (
+                    <Link
+                      key={state.code}
+                      href={`/${state.slug}-overtime-laws`}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`block px-4 py-2.5 transition-colors hover:bg-blue-50 hover:text-blue-800 focus:bg-blue-50 focus:text-blue-800 focus:outline-none ${
+                        isActive ? "bg-blue-50 text-blue-800" : ""
+                      }`}
+                    >
+                      {state.name} Overtime Laws
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </details>
 

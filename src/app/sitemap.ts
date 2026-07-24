@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { STATES_DATA } from "../data/states";
+import { STATE_LAW_PROFILES } from "../data/stateLawProfiles";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://stateovertime.com";
@@ -48,5 +49,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...statePages];
+  const stateLawPages: MetadataRoute.Sitemap = STATE_LAW_PROFILES.map((state) => ({
+    url: `${baseUrl}/${state.slug}-overtime-laws`,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...statePages, ...stateLawPages];
 }
